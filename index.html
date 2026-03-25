@@ -3,212 +3,934 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kuidas luua uus kalender Microsoft Projectis</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Microsoft Project — Kalendri Juhend</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0a0f1e;
+      --paper: #f5f0e8;
+      --accent: #e8400c;
+      --accent2: #0057ff;
+      --gold: #c9a84c;
+      --muted: #7a7567;
+      --card-bg: #ffffff;
+      --border: rgba(10,15,30,0.12);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--paper);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: .35;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      position: relative;
+      overflow: hidden;
+      padding: 0 clamp(24px, 6vw, 100px);
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: var(--ink);
+      z-index: 0;
+    }
+
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 110% 20%, rgba(0,87,255,0.35) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 70% at -10% 80%, rgba(232,64,12,0.25) 0%, transparent 55%);
+    }
+
+    .hero-grid-lines {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 80px 80px;
+      animation: gridShift 20s linear infinite;
+    }
+
+    @keyframes gridShift {
+      from { transform: translateY(0); }
+      to   { transform: translateY(80px); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 120px 0 60px;
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s ease forwards;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 800;
+      line-height: 0.95;
+      color: #fff;
+      letter-spacing: -0.03em;
+      margin-bottom: 36px;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.35s ease forwards;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+      position: relative;
+      display: inline-block;
+    }
+
+    .hero-sub {
+      max-width: 560px;
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.7;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.5s ease forwards;
+    }
+
+    .hero-scroll {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 32px 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: rgba(255,255,255,0.35);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.9s ease forwards;
+    }
+
+    .scroll-line {
+      width: 40px;
+      height: 1px;
+      background: rgba(255,255,255,0.25);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .scroll-line::after {
+      content: '';
+      position: absolute;
+      left: -100%;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255,255,255,0.6);
+      animation: scrollPulse 2s 1.5s ease infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%   { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── NAV ── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 800;
+      background: rgba(245,240,232,0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 clamp(24px, 6vw, 100px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+
+    .nav-brand {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-brand span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 4px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 100px;
+      transition: all 0.2s ease;
+      letter-spacing: 0.01em;
+    }
+
+    .nav-links a:hover {
+      color: var(--ink);
+      background: rgba(10,15,30,0.06);
+    }
+
+    /* ── MAIN WRAPPER ── */
+    .main-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 80px clamp(24px, 6vw, 100px);
+    }
+
+    /* ── SECTION HEADER ── */
+    .sec-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .sec-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+
+    .sec-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+    }
+
+    .sec-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── PURPOSE CARD ── */
+    .purpose-block {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 100px;
+    }
+
+    .purpose-cell {
+      background: var(--card-bg);
+      padding: 48px;
+    }
+
+    .purpose-cell:first-child {
+      border-right: 1px solid var(--border);
+    }
+
+    .purpose-cell h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .purpose-cell p {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: #3a3a3a;
+    }
+
+    .purpose-big {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.4rem, 5vw, 4.2rem);
+      font-weight: 800;
+      color: var(--ink);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+    }
+
+    .purpose-big em {
+      font-style: normal;
+      color: var(--accent2);
+    }
+
+    /* ── STEPS ── */
+    .steps-section { margin-bottom: 100px; }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .step-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .step-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(10,15,30,0.1);
+    }
+
+    .step-card:first-child {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .step-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent2), var(--accent));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .step-card:hover::before { opacity: 1; }
+
+    .step-num-big {
+      font-family: 'Syne', sans-serif;
+      font-size: 5rem;
+      font-weight: 800;
+      color: rgba(10,15,30,0.05);
+      line-height: 1;
+      position: absolute;
+      bottom: 20px;
+      right: 30px;
+      letter-spacing: -0.05em;
+      pointer-events: none;
+      transition: color 0.3s ease;
+    }
+
+    .step-card:hover .step-num-big {
+      color: rgba(0,87,255,0.06);
+    }
+
+    .step-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: var(--ink);
+      color: white;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+      flex-shrink: 0;
+    }
+
+    .step-card:first-child .step-badge {
+      width: 64px;
+      height: 64px;
+      font-size: 1.4rem;
+      border-radius: 18px;
+      margin-bottom: 0;
+    }
+
+    .step-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+
+    .step-card p {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: #525252;
+    }
+
+    .step-card strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    /* ── GALLERY ── */
+    .gallery-section { margin-bottom: 100px; }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 16px;
+    }
+
+    .gallery-item { border-radius: 16px; overflow: hidden; border: 1px solid var(--border); }
+    .gallery-item:nth-child(1) { grid-column: span 7; }
+    .gallery-item:nth-child(2) { grid-column: span 5; }
+    .gallery-item:nth-child(3) { grid-column: span 4; }
+    .gallery-item:nth-child(4) { grid-column: span 4; }
+    .gallery-item:nth-child(5) { grid-column: span 4; }
+
+    .gallery-img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      display: block;
+      background: linear-gradient(135deg, #e8f0ff 0%, #dbe9ff 100%);
+      position: relative;
+    }
+
+    /* placeholder pattern for images */
+    .gallery-img-placeholder {
+      width: 100%;
+      height: 240px;
+      background: linear-gradient(135deg, #e0e8ff, #cdd9f5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .gallery-img-placeholder svg { opacity: 0.3; }
+    .gallery-img-placeholder span {
+      font-size: 0.8rem;
+      color: var(--muted);
+      opacity: 0.7;
+    }
+
+    .gallery-caption {
+      padding: 16px 20px;
+      font-size: 0.85rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      background: var(--card-bg);
+    }
+
+    .gallery-caption strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    /* ── HOW-TO + IMPACT ── */
+    .two-col-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 100px;
+    }
+
+    .info-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 48px;
+    }
+
+    .info-card h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+
+    .info-card p {
+      font-size: 0.97rem;
+      line-height: 1.75;
+      color: #525252;
+      margin-bottom: 16px;
+    }
+
+    .impact-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .impact-list li {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      font-size: 0.96rem;
+      color: #3a3a3a;
+      line-height: 1.6;
+    }
+
+    .impact-list li::before {
+      content: '';
+      flex-shrink: 0;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-top: 8px;
+    }
+
+    .alert-box {
+      margin-top: 28px;
+      padding: 20px 24px;
+      background: #fff5f2;
+      border: 1px solid rgba(232,64,12,0.2);
+      border-radius: 14px;
+      font-size: 0.9rem;
+      line-height: 1.65;
+      color: #6b2a12;
+    }
+
+    .alert-box strong { color: var(--accent); }
+
+    /* ── GITHUB STRIP ── */
+    .github-strip {
+      background: var(--ink);
+      border-radius: 20px;
+      padding: 48px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 40px;
+      margin-bottom: 100px;
+    }
+
+    .github-strip h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    .github-strip p {
+      color: rgba(255,255,255,0.55);
+      font-size: 0.95rem;
+      line-height: 1.65;
+      max-width: 560px;
+    }
+
+    .commit-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .commit-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 100px;
+      font-family: 'DM Mono', 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.75);
+    }
+
+    .commit-tag::before {
+      content: '●';
+      color: #4ade80;
+      font-size: 0.6rem;
+    }
+
+    .github-icon-wrap {
+      width: 96px;
+      height: 96px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* ── SUMMARY ── */
+    .summary-block {
+      text-align: center;
+      padding: 80px 40px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      margin-bottom: 80px;
+    }
+
+    .summary-block h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 800;
+      color: var(--ink);
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      max-width: 700px;
+      margin: 0 auto 24px;
+    }
+
+    .summary-block h2 em {
+      font-style: normal;
+      color: var(--accent2);
+    }
+
+    .summary-block p {
+      max-width: 580px;
+      margin: 0 auto;
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: #525252;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px clamp(24px, 6vw, 100px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    footer p {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .footer-badge {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      padding: 6px 14px;
+      border: 1px solid rgba(232,64,12,0.25);
+      border-radius: 100px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .purpose-block { grid-template-columns: 1fr; }
+      .purpose-cell:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+      .steps-grid { grid-template-columns: 1fr; }
+      .step-card:first-child { grid-template-columns: 1fr; }
+      .two-col-section { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-item { grid-column: span 1 !important; }
+      .github-strip { grid-template-columns: 1fr; }
+      .github-icon-wrap { display: none; }
+      .nav-links { display: none; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+    }
+
+    @media (max-width: 520px) {
+      .gallery-grid { grid-template-columns: 1fr; }
+      .purpose-cell { padding: 30px 24px; }
+      .step-card { padding: 28px 24px; }
+      .info-card { padding: 30px 24px; }
+    }
+  </style>
 </head>
 <body>
-  <header class="hero">
-    <div class="container">
-      <h1>Kuidas luua uus kalender Microsoft Projectis</h1>
-      <p class="subtitle">
-        Samm-sammuline juhend uue kalendri loomiseks, tööaegade muutmiseks ja kalendri kasutamiseks projektis.
-      </p>
-    </div>
-  </header>
 
-  <nav class="nav">
-    <div class="container nav-links">
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-grid-lines"></div>
+  </div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Microsoft Project · Õpetlik juhend</p>
+    <h1>Loo uus<br><em>kalender</em><br>MS Projectis</h1>
+    <p class="hero-sub">Samm-sammuline juhend uue kalendri loomiseks, tööaegade muutmiseks ja kalendri rakendamiseks projektiplaanis.</p>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Keri alla
+  </div>
+</section>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-brand">MS Project <span>·</span> Kalender</a>
+    <div class="nav-links">
       <a href="#eesmark">Eesmärk</a>
-      <a href="#sammud">Juhend</a>
+      <a href="#sammud">Sammud</a>
       <a href="#pildid">Pildid</a>
-      <a href="#kasutamine">Kalendri kasutamine</a>
-      <a href="#moju">Mõju ajakavale</a>
+      <a href="#kasutamine">Kasutamine</a>
+      <a href="#moju">Mõju</a>
       <a href="#kokkuvote">Kokkuvõte</a>
     </div>
-  </nav>
+  </div>
+</nav>
 
-  <main class="container">
-    <section class="card" id="eesmark">
-      <h2>Ülesande eesmärk</h2>
-      <p>
-        Selle veebilehe eesmärk on selgitada, kuidas Microsoft Projectis luua uus kalender,
-        muuta tööaegu ning kasutada kalendrit projekti planeerimisel. Kalender on oluline osa
-        projektijuhtimises, sest see määrab ära, millistel päevadel ja kellaaegadel saab töö toimuda.
-      </p>
-      <p>
-        Kui projektis kasutatakse õiget kalendrit, siis on ajakava täpsem ning ülesannete kestused
-        arvutatakse realistlikumalt.
-      </p>
-    </section>
+<!-- MAIN -->
+<main class="main-wrap">
 
-    <section class="card" id="sammud">
-      <h2>Samm-sammuline juhend</h2>
-
-      <div class="step">
-        <div class="step-number">1</div>
-        <div class="step-content">
-          <h3>Ava Microsoft Project</h3>
-          <p>
-            Käivita Microsoft Project ja ava olemasolev projekt või loo uus projektifail.
-            Seejärel vali menüüst <strong>Project</strong>.
-          </p>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-number">2</div>
-        <div class="step-content">
-          <h3>Ava tööaja muutmise aken</h3>
-          <p>
-            Menüü <strong>Project</strong> alt vali <strong>Change Working Time</strong>.
-            Selles aknas saab hallata olemasolevaid kalendreid, muuta tööpäevi ja lisada erandeid.
-          </p>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-number">3</div>
-        <div class="step-content">
-          <h3>Loo uus kalender</h3>
-          <p>
-            Vajuta nupule <strong>Create New Calendar</strong>. Sisesta uue kalendri nimi ning vali,
-            kas soovid luua täiesti uue kalendri või teha koopia olemasolevast kalendrist.
-          </p>
-          <p>
-            Tavaliselt on mugav kasutada olemasolevat standardkalendrit alusena ja teha selles vajalikud muudatused.
-          </p>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-number">4</div>
-        <div class="step-content">
-          <h3>Muuda tööpäevi ja tööaega</h3>
-          <p>
-            Pärast kalendri loomist vali vajalikud nädalapäevad ja määra, millal töö toimub.
-            Näiteks saad määrata tööajaks 08:00–12:00 ja 13:00–17:00 või muuta mõne päeva puhkepäevaks.
-          </p>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-number">5</div>
-        <div class="step-content">
-          <h3>Lisa eripäevad ja puhkused</h3>
-          <p>
-            Vahekaardil <strong>Exceptions</strong> saad lisada erandeid, näiteks riigipühad,
-            ettevõtte kollektiivpuhkuse või muud päevad, mil tööd ei tehta.
-          </p>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-number">6</div>
-        <div class="step-content">
-          <h3>Kasuta kalendrit projektis</h3>
-          <p>
-            Kui kalender on valmis, saab selle siduda projektiga. Selleks ava
-            <strong>Project Information</strong> ja vali sobiv kalender väljalt <strong>Calendar</strong>.
-          </p>
-          <p>
-            Nüüd hakkab Microsoft Project arvutama ülesannete ajakava vastavalt sinu loodud kalendrile.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="card" id="pildid">
-      <h2>Ekraanipildid</h2>
-      <p class="section-intro">
-        Allpool on näited kohtadest, kuhu saad lisada oma tehtud pildilõiked Microsoft Projectist.
-      </p>
-
-      <div class="gallery">
-        <figure class="gallery-item">
-          <img src="images/pilt1.png" alt="Microsoft Projecti menüü Project ja käsk Change Working Time">
-          <figcaption>Pilt 1. Change Working Time avamine.</figcaption>
-        </figure>
-
-        <figure class="gallery-item">
-          <img src="images/pilt2.png" alt="Uue kalendri loomise aken Microsoft Projectis">
-          <figcaption>Pilt 2. Uue kalendri loomine.</figcaption>
-        </figure>
-
-        <figure class="gallery-item">
-          <img src="images/pilt3.png" alt="Tööpäevade ja tööaegade muutmine kalendris">
-          <figcaption>Pilt 3. Tööaegade muutmine.</figcaption>
-        </figure>
-
-        <figure class="gallery-item">
-          <img src="images/pilt4.png" alt="Eripäevade ja puhkuste lisamine Microsoft Projecti kalendrisse">
-          <figcaption>Pilt 4. Erandite ja puhkepäevade lisamine.</figcaption>
-        </figure>
-
-        <figure class="gallery-item">
-          <img src="images/pilt5.png" alt="Kalendri valimine Project Information aknas">
-          <figcaption>Pilt 5. Kalendri kasutamine projektis.</figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <section class="card" id="kasutamine">
-      <h2>Kuidas kalendrit projektis kasutada</h2>
-      <p>
-        Kui uus kalender on loodud, saab seda kasutada projekti üldise ajakava määramiseks.
-        Selleks tuleb avada <strong>Project Information</strong> ning valida sobiv kalender.
-      </p>
-      <p>
-        Kalendrit saab kasutada ka konkreetsete ressursside või ülesannete jaoks, kui on vaja,
-        et osa tööst toimuks erineva graafiku järgi. Näiteks võivad mõned töötajad töötada
-        vahetustega või ainult kindlatel nädalapäevadel.
-      </p>
-    </section>
-
-    <section class="card" id="moju">
-      <h2>Kuidas kalender mõjutab ajakava</h2>
-      <ul class="styled-list">
-        <li>Kalender määrab, millal töö saab toimuda.</li>
-        <li>Kui päev on märgitud mittetööpäevaks, siis ülesandeid sellele ajale ei planeerita.</li>
-        <li>Muudetud tööajad mõjutavad ülesannete algus- ja lõppkuupäevi.</li>
-        <li>Erandid, näiteks puhkused või pühad, võivad projekti kestust pikendada.</li>
-        <li>Õigesti seadistatud kalender aitab koostada realistliku ja täpse ajakava.</li>
-      </ul>
-
-      <div class="highlight-box">
-        <strong>Oluline:</strong> kui kalender ei ole õigesti seadistatud, võib Microsoft Project
-        arvutada tähtajad valesti ning projektiplaan ei vasta tegelikule töökorraldusele.
-      </div>
-    </section>
-
-    <section class="card" id="github">
-      <h2>GitHub ja versioonihaldus</h2>
-      <p>
-        Pärast veebilehe valmimist tuleb projekt laadida GitHubi. Soovitatav on teha vähemalt
-        1–2 sisukat commit’i, näiteks:
-      </p>
-      <ul class="styled-list">
-        <li><code>Lisa HTML struktuur</code></li>
-        <li><code>Lisa CSS ja pildid</code></li>
-      </ul>
-      <p>
-        Seejärel saab veebilehe avaldada GitHub Pages’i abil ning lisada töötava lingi Moodle’isse.
-      </p>
-    </section>
-
-    <section class="card" id="kokkuvote">
-      <h2>Kokkuvõte</h2>
-      <p>
-        Microsoft Projecti kalender aitab määrata projekti tööaja reeglid. Uue kalendri loomine
-        võimaldab kohandada tööpäevi, tööaegu ja erandeid vastavalt projekti vajadustele.
-        Kui kalender on õigesti seadistatud, muutub ajakava realistlikumaks ja projektijuhtimine lihtsamaks.
-      </p>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="container">
-      <p>Koostatud Microsoft Projecti õppeülesande jaoks.</p>
+  <!-- PURPOSE -->
+  <section id="eesmark" style="margin-bottom:100px;">
+    <div class="sec-header">
+      <span class="sec-num">01</span>
+      <h2 class="sec-title">Eesmärk</h2>
+      <div class="sec-line"></div>
     </div>
-  </footer>
+    <div class="purpose-block">
+      <div class="purpose-cell">
+        <p class="purpose-big">Miks<br><em>kalender</em><br>loeb?</p>
+      </div>
+      <div class="purpose-cell">
+        <h3>Ülesande fookus</h3>
+        <p>Selle veebilehe eesmärk on selgitada, kuidas Microsoft Projectis luua uus kalender, muuta tööaegu ning kasutada seda projekti planeerimisel.</p>
+        <p style="margin-top:16px;">Kalender on projektijuhtimise alustala — see määrab, millistel päevadel ja kellaaegadel saab töö toimuda. Õige kalender teeb ajakava täpsemaks ning ülesannete kestused muutuvad realistlikumaks.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEPS -->
+  <section id="sammud" class="steps-section">
+    <div class="sec-header">
+      <span class="sec-num">02</span>
+      <h2 class="sec-title">Samm-sammuline juhend</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="steps-grid">
+
+      <div class="step-card">
+        <div class="step-badge">1</div>
+        <div>
+          <h3>Ava Microsoft Project</h3>
+          <p>Käivita Microsoft Project ja ava olemasolev projekt või loo uus projektifail. Seejärel vali menüüst <strong>Project</strong>.</p>
+        </div>
+        <div class="step-num-big">01</div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-badge">2</div>
+        <h3>Ava tööaja muutmise aken</h3>
+        <p>Menüü <strong>Project</strong> alt vali <strong>Change Working Time</strong>. Selles aknas saab hallata kalendreid, muuta tööpäevi ja lisada erandeid.</p>
+        <div class="step-num-big">02</div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-badge">3</div>
+        <h3>Loo uus kalender</h3>
+        <p>Vajuta <strong>Create New Calendar</strong>. Sisesta nimi ning vali, kas luua tühi kalender või koopia olemasolevast. Tavaliselt sobib standardkalendri kopeerimine aluseks.</p>
+        <div class="step-num-big">03</div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-badge">4</div>
+        <h3>Muuda tööpäevi ja -aegu</h3>
+        <p>Vali nädalapäevad ja määra tööajad — näiteks <strong>08:00–12:00</strong> ja <strong>13:00–17:00</strong>. Saab ka puhkepäevad märkida.</p>
+        <div class="step-num-big">04</div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-badge">5</div>
+        <h3>Lisa eripäevad ja puhkused</h3>
+        <p>Vahekaardil <strong>Exceptions</strong> lisa riigipühad, ettevõtte kollektiivpuhkus või muud mittetööpäevad.</p>
+        <div class="step-num-big">05</div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-badge">6</div>
+        <h3>Rakenda kalender projektile</h3>
+        <p>Ava <strong>Project Information</strong> ja vali loodud kalender väljalt <strong>Calendar</strong>. Nüüd arvutab MS Project ajakava sinu reeglite järgi.</p>
+        <div class="step-num-big">06</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="pildid" class="gallery-section">
+    <div class="sec-header">
+      <span class="sec-num">03</span>
+      <h2 class="sec-title">Ekraanipildid</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="gallery-grid">
+
+      <figure class="gallery-item">
+        <div class="gallery-img-placeholder" style="height:260px;">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#0a0f1e" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          <span>pilt1.png</span>
+        </div>
+        <figcaption><strong>Pilt 1.</strong> Change Working Time avamine.</figcaption>
+      </figure>
+
+      <figure class="gallery-item">
+        <div class="gallery-img-placeholder" style="height:260px;background:linear-gradient(135deg,#fde8e0,#fdd5cb);">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#e8400c" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8M8 12h8"/></svg>
+          <span>pilt2.png</span>
+        </div>
+        <figcaption><strong>Pilt 2.</strong> Uue kalendri loomine.</figcaption>
+      </figure>
+
+      <figure class="gallery-item">
+        <div class="gallery-img-placeholder" style="height:220px;background:linear-gradient(135deg,#e0ffe8,#c8f5d4);">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 2"/></svg>
+          <span>pilt3.png</span>
+        </div>
+        <figcaption><strong>Pilt 3.</strong> Tööaegade muutmine.</figcaption>
+      </figure>
+
+      <figure class="gallery-item">
+        <div class="gallery-img-placeholder" style="height:220px;background:linear-gradient(135deg,#fff8e0,#faefc0);">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          <span>pilt4.png</span>
+        </div>
+        <figcaption><strong>Pilt 4.</strong> Erandite ja puhkepäevade lisamine.</figcaption>
+      </figure>
+
+      <figure class="gallery-item">
+        <div class="gallery-img-placeholder" style="height:220px;background:linear-gradient(135deg,#f0e8ff,#e0d0f8);">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="1.5"><path d="M9 12l2 2 4-4"/><path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z"/></svg>
+          <span>pilt5.png</span>
+        </div>
+        <figcaption><strong>Pilt 5.</strong> Kalendri kasutamine projektis.</figcaption>
+      </figure>
+
+    </div>
+  </section>
+
+  <!-- HOW-TO + IMPACT -->
+  <div class="two-col-section">
+    <div class="info-card" id="kasutamine">
+      <h2>Kuidas kasutada projektis</h2>
+      <p>Kui uus kalender on loodud, saab selle siduda projekti üldise ajakavaga. Selleks tuleb avada <strong>Project Information</strong> ning valida sobiv kalender.</p>
+      <p>Kalendrit saab määrata ka konkreetsetele ressurssidele või ülesannetele — näiteks kui osa töötajaid töötab vahetustega või ainult kindlatel päevadel.</p>
+    </div>
+
+    <div class="info-card" id="moju">
+      <h2>Mõju ajakavale</h2>
+      <ul class="impact-list">
+        <li>Kalender määrab, millal töö saab toimuda.</li>
+        <li>Mittetööpäevadele ülesandeid ei planeerita.</li>
+        <li>Muudetud tööajad mõjutavad algus- ja lõppkuupäevi.</li>
+        <li>Puhkused võivad projekti kestust pikendada.</li>
+        <li>Õige kalender tagab realistliku ajakava.</li>
+      </ul>
+      <div class="alert-box">
+        <strong>⚠ Oluline:</strong> vale kalender põhjustab valed tähtajad ning projektiplaan ei vasta tegelikule töökorraldusele.
+      </div>
+    </div>
+  </div>
+
+  <!-- GITHUB -->
+  <div class="github-strip" id="github">
+    <div>
+      <h2>GitHub & Versioonihaldus</h2>
+      <p>Pärast veebilehe valmimist laadi projekt GitHubi. Soovitatav on teha vähemalt 1–2 sisukat commit'i, seejärel avalda leht GitHub Pages'i kaudu.</p>
+      <div class="commit-tags">
+        <span class="commit-tag">Lisa HTML struktuur</span>
+        <span class="commit-tag">Lisa CSS ja pildid</span>
+      </div>
+    </div>
+    <div class="github-icon-wrap">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="white"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+    </div>
+  </div>
+
+  <!-- SUMMARY -->
+  <section id="kokkuvote" class="summary-block">
+    <h2>Realistlik ajakava algab <em>õigest</em> kalendrist.</h2>
+    <p>Microsoft Projecti kalender aitab määrata projekti tööaja reeglid. Uue kalendri loomine võimaldab kohandada tööpäevi, tööaegu ja erandeid vastavalt projekti vajadustele — ning muudab kogu planeerimise täpsemaks ja lihtsamaks.</p>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <p>Koostatud Microsoft Projecti õppeülesande jaoks.</p>
+  <span class="footer-badge">MS Project</span>
+</footer>
+
 </body>
 </html>
