@@ -3,81 +3,211 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mis on MS Project</title>
+  <title>Kuidas luua uus kalender Microsoft Projectis</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
+  <header class="hero">
     <div class="container">
-      <h1>Mis on MS Project?</h1>
-      <p>Lihtne ülevaade projektijuhtimise tarkvarast</p>
+      <h1>Kuidas luua uus kalender Microsoft Projectis</h1>
+      <p class="subtitle">
+        Samm-sammuline juhend uue kalendri loomiseks, tööaegade muutmiseks ja kalendri kasutamiseks projektis.
+      </p>
     </div>
   </header>
 
+  <nav class="nav">
+    <div class="container nav-links">
+      <a href="#eesmark">Eesmärk</a>
+      <a href="#sammud">Juhend</a>
+      <a href="#pildid">Pildid</a>
+      <a href="#kasutamine">Kalendri kasutamine</a>
+      <a href="#moju">Mõju ajakavale</a>
+      <a href="#kokkuvote">Kokkuvõte</a>
+    </div>
+  </nav>
+
   <main class="container">
-    <section class="card">
-      <h2>Sissejuhatus</h2>
+    <section class="card" id="eesmark">
+      <h2>Ülesande eesmärk</h2>
       <p>
-        MS Project ehk Microsoft Project on projektijuhtimise tarkvara, mida kasutatakse
-        projektide planeerimiseks, jälgimiseks ja haldamiseks. See aitab koostada ajakavasid,
-        jagada ülesandeid, määrata ressursse ning kontrollida projekti edenemist.
+        Selle veebilehe eesmärk on selgitada, kuidas Microsoft Projectis luua uus kalender,
+        muuta tööaegu ning kasutada kalendrit projekti planeerimisel. Kalender on oluline osa
+        projektijuhtimises, sest see määrab ära, millistel päevadel ja kellaaegadel saab töö toimuda.
+      </p>
+      <p>
+        Kui projektis kasutatakse õiget kalendrit, siis on ajakava täpsem ning ülesannete kestused
+        arvutatakse realistlikumalt.
       </p>
     </section>
 
-    <section class="card">
-      <h2>Milleks kasutatakse MS Projectit?</h2>
-      <p>MS Projectit kasutatakse erinevates valdkondades, kus on vaja juhtida projekte ja tegevusi.</p>
-      <ul>
-        <li>ülesannete ja etappide planeerimiseks;</li>
-        <li>tähtaegade määramiseks;</li>
-        <li>ressursside ja tööjõu jagamiseks;</li>
-        <li>projekti eelarve jälgimiseks;</li>
-        <li>Gantti diagrammi koostamiseks;</li>
-        <li>projekti edenemise kontrollimiseks.</li>
-      </ul>
-    </section>
+    <section class="card" id="sammud">
+      <h2>Samm-sammuline juhend</h2>
 
-    <section class="card">
-      <h2>MS Projecti peamised funktsioonid</h2>
-      <ul>
-        <li><strong>Ülesanded:</strong> saab lisada projekti tegevused ja alamülesanded.</li>
-        <li><strong>Ajagraafik:</strong> määratakse algus- ja lõppkuupäevad ning kestused.</li>
-        <li><strong>Dependencies:</strong> ülesandeid saab omavahel siduda.</li>
-        <li><strong>Milestones:</strong> võimalik lisada verstaposte ehk olulisi kontrollpunkte.</li>
-        <li><strong>Resources:</strong> saab määrata töötajad, seadmed ja muud ressursid.</li>
-        <li><strong>Cost:</strong> võimalik jälgida projekti kulusid ja eelarvet.</li>
-        <li><strong>Gantt Chart:</strong> visuaalne ajakava ülesannete kuvamiseks.</li>
-      </ul>
+      <div class="step">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <h3>Ava Microsoft Project</h3>
+          <p>
+            Käivita Microsoft Project ja ava olemasolev projekt või loo uus projektifail.
+            Seejärel vali menüüst <strong>Project</strong>.
+          </p>
+        </div>
+      </div>
 
-      <div class="highlight">
-        MS Project sobib hästi nii väikeste kui ka suurte projektide planeerimiseks.
+      <div class="step">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <h3>Ava tööaja muutmise aken</h3>
+          <p>
+            Menüü <strong>Project</strong> alt vali <strong>Change Working Time</strong>.
+            Selles aknas saab hallata olemasolevaid kalendreid, muuta tööpäevi ja lisada erandeid.
+          </p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <h3>Loo uus kalender</h3>
+          <p>
+            Vajuta nupule <strong>Create New Calendar</strong>. Sisesta uue kalendri nimi ning vali,
+            kas soovid luua täiesti uue kalendri või teha koopia olemasolevast kalendrist.
+          </p>
+          <p>
+            Tavaliselt on mugav kasutada olemasolevat standardkalendrit alusena ja teha selles vajalikud muudatused.
+          </p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-number">4</div>
+        <div class="step-content">
+          <h3>Muuda tööpäevi ja tööaega</h3>
+          <p>
+            Pärast kalendri loomist vali vajalikud nädalapäevad ja määra, millal töö toimub.
+            Näiteks saad määrata tööajaks 08:00–12:00 ja 13:00–17:00 või muuta mõne päeva puhkepäevaks.
+          </p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-number">5</div>
+        <div class="step-content">
+          <h3>Lisa eripäevad ja puhkused</h3>
+          <p>
+            Vahekaardil <strong>Exceptions</strong> saad lisada erandeid, näiteks riigipühad,
+            ettevõtte kollektiivpuhkuse või muud päevad, mil tööd ei tehta.
+          </p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-number">6</div>
+        <div class="step-content">
+          <h3>Kasuta kalendrit projektis</h3>
+          <p>
+            Kui kalender on valmis, saab selle siduda projektiga. Selleks ava
+            <strong>Project Information</strong> ja vali sobiv kalender väljalt <strong>Calendar</strong>.
+          </p>
+          <p>
+            Nüüd hakkab Microsoft Project arvutama ülesannete ajakava vastavalt sinu loodud kalendrile.
+          </p>
+        </div>
       </div>
     </section>
 
-    <section class="card">
-      <h2>MS Projecti eelised</h2>
-      <ul>
-        <li>aitab hoida projekti korrastatuna;</li>
-        <li>parandab ajaplaneerimist;</li>
-        <li>võimaldab näha kogu projekti tervikpilti;</li>
-        <li>aitab ennetada viivitusi ja ressursipuudust;</li>
-        <li>lihtsustab meeskonnatööd ja ülesannete jaotust.</li>
-      </ul>
+    <section class="card" id="pildid">
+      <h2>Ekraanipildid</h2>
+      <p class="section-intro">
+        Allpool on näited kohtadest, kuhu saad lisada oma tehtud pildilõiked Microsoft Projectist.
+      </p>
+
+      <div class="gallery">
+        <figure class="gallery-item">
+          <img src="images/pilt1.png" alt="Microsoft Projecti menüü Project ja käsk Change Working Time">
+          <figcaption>Pilt 1. Change Working Time avamine.</figcaption>
+        </figure>
+
+        <figure class="gallery-item">
+          <img src="images/pilt2.png" alt="Uue kalendri loomise aken Microsoft Projectis">
+          <figcaption>Pilt 2. Uue kalendri loomine.</figcaption>
+        </figure>
+
+        <figure class="gallery-item">
+          <img src="images/pilt3.png" alt="Tööpäevade ja tööaegade muutmine kalendris">
+          <figcaption>Pilt 3. Tööaegade muutmine.</figcaption>
+        </figure>
+
+        <figure class="gallery-item">
+          <img src="images/pilt4.png" alt="Eripäevade ja puhkuste lisamine Microsoft Projecti kalendrisse">
+          <figcaption>Pilt 4. Erandite ja puhkepäevade lisamine.</figcaption>
+        </figure>
+
+        <figure class="gallery-item">
+          <img src="images/pilt5.png" alt="Kalendri valimine Project Information aknas">
+          <figcaption>Pilt 5. Kalendri kasutamine projektis.</figcaption>
+        </figure>
+      </div>
     </section>
 
-    <section class="card">
+    <section class="card" id="kasutamine">
+      <h2>Kuidas kalendrit projektis kasutada</h2>
+      <p>
+        Kui uus kalender on loodud, saab seda kasutada projekti üldise ajakava määramiseks.
+        Selleks tuleb avada <strong>Project Information</strong> ning valida sobiv kalender.
+      </p>
+      <p>
+        Kalendrit saab kasutada ka konkreetsete ressursside või ülesannete jaoks, kui on vaja,
+        et osa tööst toimuks erineva graafiku järgi. Näiteks võivad mõned töötajad töötada
+        vahetustega või ainult kindlatel nädalapäevadel.
+      </p>
+    </section>
+
+    <section class="card" id="moju">
+      <h2>Kuidas kalender mõjutab ajakava</h2>
+      <ul class="styled-list">
+        <li>Kalender määrab, millal töö saab toimuda.</li>
+        <li>Kui päev on märgitud mittetööpäevaks, siis ülesandeid sellele ajale ei planeerita.</li>
+        <li>Muudetud tööajad mõjutavad ülesannete algus- ja lõppkuupäevi.</li>
+        <li>Erandid, näiteks puhkused või pühad, võivad projekti kestust pikendada.</li>
+        <li>Õigesti seadistatud kalender aitab koostada realistliku ja täpse ajakava.</li>
+      </ul>
+
+      <div class="highlight-box">
+        <strong>Oluline:</strong> kui kalender ei ole õigesti seadistatud, võib Microsoft Project
+        arvutada tähtajad valesti ning projektiplaan ei vasta tegelikule töökorraldusele.
+      </div>
+    </section>
+
+    <section class="card" id="github">
+      <h2>GitHub ja versioonihaldus</h2>
+      <p>
+        Pärast veebilehe valmimist tuleb projekt laadida GitHubi. Soovitatav on teha vähemalt
+        1–2 sisukat commit’i, näiteks:
+      </p>
+      <ul class="styled-list">
+        <li><code>Lisa HTML struktuur</code></li>
+        <li><code>Lisa CSS ja pildid</code></li>
+      </ul>
+      <p>
+        Seejärel saab veebilehe avaldada GitHub Pages’i abil ning lisada töötava lingi Moodle’isse.
+      </p>
+    </section>
+
+    <section class="card" id="kokkuvote">
       <h2>Kokkuvõte</h2>
       <p>
-        MS Project on kasulik tööriist projektide juhtimiseks. Selle abil saab planeerida
-        tegevusi, määrata ressursse, hallata kulusid ning jälgida kogu projekti edenemist.
-        See on eriti kasulik siis, kui projekt sisaldab palju ülesandeid, tähtaegu ja inimesi.
+        Microsoft Projecti kalender aitab määrata projekti tööaja reeglid. Uue kalendri loomine
+        võimaldab kohandada tööpäevi, tööaegu ja erandeid vastavalt projekti vajadustele.
+        Kui kalender on õigesti seadistatud, muutub ajakava realistlikumaks ja projektijuhtimine lihtsamaks.
       </p>
     </section>
   </main>
 
-  <footer>
+  <footer class="footer">
     <div class="container">
-      <p>&copy; 2026 | HTML leht teemal "Mis on MS Project"</p>
+      <p>Koostatud Microsoft Projecti õppeülesande jaoks.</p>
     </div>
   </footer>
 </body>
