@@ -107,6 +107,53 @@
       animation: fadeUp 0.8s 0.2s ease forwards;
     }
 
+
+
+
+.gallery-img {
+  cursor: zoom-in;
+}
+
+/* МОДАЛКА */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 99999;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 12px;
+  animation: zoomIn 0.3s ease;
+}
+
+.modal-close {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  font-size: 40px;
+  color: white;
+  cursor: pointer;
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+
+
+
+
+
+    
+
+    
     .hero-eyebrow::before {
       content: '';
       display: block;
@@ -838,43 +885,28 @@
 
   <div class="gallery-grid">
 
-    <!-- Pilt 1 -->
     <figure class="gallery-item">
-      <a href="{8E78CBBE-38A5-4F0B-BA99-F5B09DC5945A}.png" target="_blank">
-        <img src="{8E78CBBE-38A5-4F0B-BA99-F5B09DC5945A}.png" alt="Pilt 1" class="gallery-img">
-      </a>
+      <img src="{8E78CBBE-38A5-4F0B-BA99-F5B09DC5945A}.png" class="gallery-img" onclick="openModal(this)">
       <figcaption><strong>Pilt 1.</strong> Change Working Time avamine.</figcaption>
     </figure>
 
-    <!-- Pilt 2 -->
     <figure class="gallery-item">
-      <a href="{4AE7CDAB-3FF7-4F67-A693-CB76347E0A18}.png" target="_blank">
-        <img src="{4AE7CDAB-3FF7-4F67-A693-CB76347E0A18}.png" alt="Pilt 2" class="gallery-img">
-      </a>
+      <img src="{4AE7CDAB-3FF7-4F67-A693-CB76347E0A18}.png" class="gallery-img" onclick="openModal(this)">
       <figcaption><strong>Pilt 2.</strong> Uue kalendri loomine.</figcaption>
     </figure>
 
-    <!-- Pilt 3 -->
     <figure class="gallery-item">
-      <a href="{8E78CBBE-38A5-4F0B-BA99-F5B09DC5945A}.png" target="_blank">
-        <img src="{8E78CBBE-38A5-4F0B-BA99-F5B09DC5945A}.png" alt="Pilt 3" class="gallery-img">
-      </a>
+      <img src="{8E78CBBE-38A5-4F0B-BA99-F5B09DC5945A}.png" class="gallery-img" onclick="openModal(this)">
       <figcaption><strong>Pilt 3.</strong> Tööaegade muutmine.</figcaption>
     </figure>
 
-    <!-- Pilt 4 -->
     <figure class="gallery-item">
-      <a href="{6FE6D2B3-EE67-4D7B-B40A-3692D708C390}.png" target="_blank">
-        <img src="{6FE6D2B3-EE67-4D7B-B40A-3692D708C390}.png" alt="Pilt 4" class="gallery-img">
-      </a>
+      <img src="{6FE6D2B3-EE67-4D7B-B40A-3692D708C390}.png" class="gallery-img" onclick="openModal(this)">
       <figcaption><strong>Pilt 4.</strong> Erandite ja puhkepäevade lisamine.</figcaption>
     </figure>
 
-    <!-- Pilt 5 -->
     <figure class="gallery-item">
-      <a href="{5EE61340-8575-422F-A4D2-11BC29866CBF}.png" target="_blank">
-        <img src="{5EE61340-8575-422F-A4D2-11BC29866CBF}.png" alt="Pilt 5" class="gallery-img">
-      </a>
+      <img src="{5EE61340-8575-422F-A4D2-11BC29866CBF}.png" class="gallery-img" onclick="openModal(this)">
       <figcaption><strong>Pilt 5.</strong> Kalendri kasutamine projektis.</figcaption>
     </figure>
 
@@ -933,5 +965,36 @@
   <span class="footer-badge">MS Project</span>
 </footer>
 
+<div id="imgModal" class="modal">
+  <span class="modal-close" onclick="closeModal()">&times;</span>
+  <img class="modal-content" id="modalImg">
+</div>
+
+<script>
+function openModal(img) {
+  const modal = document.getElementById("imgModal");
+  const modalImg = document.getElementById("modalImg");
+
+  modal.style.display = "flex";
+  modalImg.src = img.src;
+}
+
+function closeModal() {
+  document.getElementById("imgModal").style.display = "none";
+}
+
+// закрытие по клику на фон
+document.getElementById("imgModal").addEventListener("click", function(e) {
+  if (e.target === this) {
+    closeModal();
+  }
+});
+
+// закрытие по ESC
+document.addEventListener("keydown", function(e) {
+  if (e.key === "Escape") closeModal();
+});
+</script>
+  
 </body>
 </html>
