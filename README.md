@@ -31,13 +31,15 @@ Iga leht näitab konkreetset protsessi samm-sammult koos visuaalide ja selgitust
 
 ## 📄 Lehed
 
+<div align="center">
+
 <table>
 <tr>
-<td width="50%">
+<td width="45%" valign="top">
 
 ### 📅 `index.html` — Kalender
 
-Realiseeritud:
+**Realiseeritud:**
 
 | # | Tegevus |
 |---|---------|
@@ -49,11 +51,12 @@ Realiseeritud:
 | 6 | Kalendri rakendamine projektile |
 
 </td>
-<td width="50%">
+
+<td width="45%" valign="top">
 
 ### 📊 `diagramm.html` — Diagrammid
 
-Realiseeritud:
+**Realiseeritud:**
 
 | # | Tegevus |
 |---|---------|
@@ -68,11 +71,13 @@ Realiseeritud:
 </tr>
 </table>
 
+</div>
+
 ---
 
 ### 🧮 `valem.html` — Arvutusväli
 
-Realiseeritud:
+**Realiseeritud:**
 
 - Arvutusvälja loomine  
 - Valemite sisestamine  
