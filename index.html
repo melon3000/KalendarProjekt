@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Microsoft Project — Kalendri Juhend</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0a0f1e;
+      --paper: #f5f0e8;
+      --accent: #e8400c;
+      --accent2: #0057ff;
+      --gold: #c9a84c;
+      --muted: #7a7567;
+      --card-bg: #ffffff;
+      --border: rgba(10,15,30,0.12);
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background-color: var(--paper); color: var(--ink); overflow-x: hidden; }
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 9999; opacity: .35;
+    }
+
+    /* HERO */
+    .hero { min-height: 100vh; display: grid; grid-template-rows: 1fr auto; position: relative; overflow: hidden; padding: 0 clamp(24px, 6vw, 100px); }
+    .hero-bg { position: absolute; inset: 0; background: var(--ink); z-index: 0; }
+    .hero-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 110% 20%, rgba(0,87,255,0.35) 0%, transparent 60%),
+                  radial-gradient(ellipse 50% 70% at -10% 80%, rgba(232,64,12,0.25) 0%, transparent 55%);
+    }
+    .hero-grid-lines {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 80px 80px;
+      animation: gridShift 20s linear infinite;
+    }
+    @keyframes gridShift { from { transform: translateY(0); } to { transform: translateY(80px); } }
+    .hero-content { position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; padding: 120px 0 60px; max-width: 1100px; margin: 0 auto; width: 100%; }
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: 10px; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 32px; opacity: 0; animation: fadeUp 0.8s 0.2s ease forwards; }
+    .hero-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--gold); }
+    .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(3rem, 8vw, 7rem); font-weight: 800; line-height: 0.95; color: #fff; letter-spacing: -0.03em; margin-bottom: 36px; opacity: 0; animation: fadeUp 0.9s 0.35s ease forwards; }
+    .hero h1 em { font-style: normal; color: var(--accent); }
+    .hero-sub { max-width: 560px; font-size: 1.1rem; font-weight: 300; color: rgba(255,255,255,0.65); line-height: 1.7; opacity: 0; animation: fadeUp 0.9s 0.5s ease forwards; }
+    .hero-scroll { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; width: 100%; padding: 32px 0; display: flex; align-items: center; gap: 12px; color: rgba(255,255,255,0.35); font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0; animation: fadeUp 0.9s 0.9s ease forwards; }
+    .scroll-line { width: 40px; height: 1px; background: rgba(255,255,255,0.25); position: relative; overflow: hidden; }
+    .scroll-line::after { content: ''; position: absolute; left: -100%; top: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.6); animation: scrollPulse 2s 1.5s ease infinite; }
+    @keyframes scrollPulse { 0% { left: -100%; } 100% { left: 100%; } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* NAV */
+    .nav { position: sticky; top: 0; z-index: 800; background: rgba(245,240,232,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 clamp(24px, 6vw, 100px); display: flex; align-items: center; justify-content: space-between; height: 60px; }
+    .nav-brand { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem; letter-spacing: 0.04em; color: var(--ink); text-decoration: none; }
+    .nav-brand span { color: var(--accent); }
+    .nav-links { display: flex; gap: 4px; }
+    .nav-links a { text-decoration: none; color: var(--muted); font-size: 0.82rem; font-weight: 500; padding: 6px 14px; border-radius: 100px; transition: all 0.2s ease; letter-spacing: 0.01em; }
+    .nav-links a:hover, .nav-links a.active { color: var(--ink); background: rgba(10,15,30,0.06); }
+    .nav-links a.active { color: var(--accent); font-weight: 600; }
+
+    /* PAGE TABS */
+    .page-tabs { background: var(--ink); padding: 0 clamp(24px, 6vw, 100px); }
+    .page-tabs-inner { max-width: 1200px; margin: 0 auto; display: flex; gap: 0; }
+    .page-tab { text-decoration: none; color: rgba(255,255,255,0.5); font-size: 0.82rem; font-weight: 500; padding: 14px 20px; border-bottom: 2px solid transparent; transition: all 0.2s ease; letter-spacing: 0.01em; white-space: nowrap; }
+    .page-tab:hover { color: rgba(255,255,255,0.85); }
+    .page-tab.active { color: #fff; border-bottom-color: var(--accent); }
+
+    /* MAIN */
+    .main-wrap { max-width: 1200px; margin: 0 auto; padding: 80px clamp(24px, 6vw, 100px); }
+    .sec-header { display: flex; align-items: baseline; gap: 16px; margin-bottom: 48px; }
+    .sec-num { font-family: 'Syne', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; color: var(--accent); text-transform: uppercase; }
+    .sec-title { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700; color: var(--ink); letter-spacing: -0.03em; line-height: 1.1; }
+    .sec-line { flex: 1; height: 1px; background: var(--border); }
+
+    /* PURPOSE */
+    .purpose-block { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; margin-bottom: 100px; }
+    .purpose-cell { background: var(--card-bg); padding: 48px; }
+    .purpose-cell:first-child { border-right: 1px solid var(--border); }
+    .purpose-cell h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; }
+    .purpose-cell p { font-size: 1.05rem; line-height: 1.75; color: #3a3a3a; }
+    .purpose-big { font-family: 'Syne', sans-serif; font-size: clamp(2.4rem, 5vw, 4.2rem); font-weight: 800; color: var(--ink); line-height: 1.05; letter-spacing: -0.04em; }
+    .purpose-big em { font-style: normal; color: var(--accent2); }
+
+    /* STEPS */
+    .steps-section { margin-bottom: 100px; }
+    .steps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .step-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 40px; position: relative; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .step-card:hover { transform: translateY(-4px); box-shadow: 0 20px 60px rgba(10,15,30,0.1); }
+    .step-card:first-child { grid-column: 1 / -1; display: grid; grid-template-columns: auto 1fr; gap: 40px; align-items: start; }
+    .step-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent2), var(--accent)); opacity: 0; transition: opacity 0.3s ease; }
+    .step-card:hover::before { opacity: 1; }
+    .step-num-big { font-family: 'Syne', sans-serif; font-size: 5rem; font-weight: 800; color: rgba(10,15,30,0.05); line-height: 1; position: absolute; bottom: 20px; right: 30px; letter-spacing: -0.05em; pointer-events: none; }
+    .step-badge { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 14px; background: var(--ink); color: white; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem; margin-bottom: 20px; flex-shrink: 0; }
+    .step-card:first-child .step-badge { width: 64px; height: 64px; font-size: 1.4rem; border-radius: 18px; margin-bottom: 0; }
+    .step-card h3 { font-family: 'Syne', sans-serif; font-size: 1.15rem; font-weight: 700; color: var(--ink); margin-bottom: 12px; letter-spacing: -0.01em; }
+    .step-card p { font-size: 0.95rem; line-height: 1.7; color: #525252; }
+    .step-card strong { color: var(--ink); font-weight: 600; }
+
+    /* GALLERY */
+    .gallery-section { margin-bottom: 100px; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
+    .gallery-item { border-radius: 16px; overflow: hidden; border: 1px solid var(--border); }
+    .gallery-item:nth-child(1) { grid-column: span 7; }
+    .gallery-item:nth-child(2) { grid-column: span 5; }
+    .gallery-item:nth-child(3) { grid-column: span 4; }
+    .gallery-item:nth-child(4) { grid-column: span 4; }
+    .gallery-item:nth-child(5) { grid-column: span 4; }
+    .gallery-img { width: 100%; height: 240px; object-fit: cover; display: block; cursor: zoom-in; background: linear-gradient(135deg, #e8f0ff 0%, #dbe9ff 100%); }
+    .gallery-caption { padding: 16px 20px; font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--border); background: var(--card-bg); }
+    .gallery-caption strong { color: var(--ink); font-weight: 600; }
+
+    /* TWO COL */
+    .two-col-section { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 100px; }
+    .info-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 48px; }
+    .info-card h2 { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--ink); letter-spacing: -0.02em; margin-bottom: 24px; }
+    .info-card p { font-size: 0.97rem; line-height: 1.75; color: #525252; margin-bottom: 16px; }
+    .impact-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+    .impact-list li { display: flex; gap: 14px; align-items: flex-start; font-size: 0.96rem; color: #3a3a3a; line-height: 1.6; }
+    .impact-list li::before { content: ''; flex-shrink: 0; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin-top: 8px; }
+    .alert-box { margin-top: 28px; padding: 20px 24px; background: #fff5f2; border: 1px solid rgba(232,64,12,0.2); border-radius: 14px; font-size: 0.9rem; line-height: 1.65; color: #6b2a12; }
+    .alert-box strong { color: var(--accent); }
+
+    /* GITHUB */
+    .github-strip { background: var(--ink); border-radius: 20px; padding: 48px; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 40px; margin-bottom: 100px; }
+    .github-strip h2 { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 700; color: #fff; letter-spacing: -0.02em; margin-bottom: 16px; }
+    .github-strip p { color: rgba(255,255,255,0.55); font-size: 0.95rem; line-height: 1.65; max-width: 560px; }
+    .github-strip a { color: rgba(255,255,255,0.75); }
+    .commit-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+    .commit-tag { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; font-family: 'DM Mono', 'Courier New', monospace; font-size: 0.8rem; color: rgba(255,255,255,0.75); }
+    .commit-tag::before { content: '●'; color: #4ade80; font-size: 0.6rem; }
+    .github-icon-wrap { width: 96px; height: 96px; border-radius: 24px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+    /* SUMMARY */
+    .summary-block { text-align: center; padding: 80px 40px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 24px; margin-bottom: 80px; }
+    .summary-block h2 { font-family: 'Syne', sans-serif; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800; color: var(--ink); letter-spacing: -0.04em; line-height: 1.1; max-width: 700px; margin: 0 auto 24px; }
+    .summary-block h2 em { font-style: normal; color: var(--accent2); }
+    .summary-block p { max-width: 580px; margin: 0 auto; font-size: 1.05rem; line-height: 1.75; color: #525252; }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border); padding: 32px clamp(24px, 6vw, 100px); display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; }
+    footer p { font-size: 0.82rem; color: var(--muted); }
+    .footer-badge { font-family: 'Syne', sans-serif; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); padding: 6px 14px; border: 1px solid rgba(232,64,12,0.25); border-radius: 100px; }
+
+    /* MODAL */
+    .modal { display: none; position: fixed; z-index: 99999; inset: 0; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; }
+    .modal-content { max-width: 90%; max-height: 90%; border-radius: 12px; animation: zoomIn 0.3s ease; }
+    .modal-close { position: absolute; top: 30px; right: 40px; font-size: 40px; color: white; cursor: pointer; }
+    @keyframes zoomIn { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+    @media (max-width: 900px) {
+      .purpose-block { grid-template-columns: 1fr; }
+      .purpose-cell:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+      .steps-grid { grid-template-columns: 1fr; }
+      .step-card:first-child { grid-template-columns: 1fr; }
+      .two-col-section { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-item { grid-column: span 1 !important; }
+      .github-strip { grid-template-columns: 1fr; }
+      .github-icon-wrap { display: none; }
+      .nav-links { display: none; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+    }
+    @media (max-width: 520px) {
+      .gallery-grid { grid-template-columns: 1fr; }
+      .purpose-cell { padding: 30px 24px; }
+      .step-card { padding: 28px 24px; }
+      .info-card { padding: 30px 24px; }
+      .page-tabs-inner { overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"><div class="hero-grid-lines"></div></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Microsoft Project · Õpetlik juhend</p>
+    <h1>Loo uus<br><em>kalender</em><br>MS Projectis</h1>
+    <p class="hero-sub">Samm-sammuline juhend uue kalendri loomiseks, tööaegade muutmiseks ja kalendri rakendamiseks projektiplaanis.</p>
+  </div>
+  <div class="hero-scroll"><div class="scroll-line"></div>Keri alla</div>
+</section>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">MS Project <span>·</span> Juhend</a>
+    <div class="nav-links">
+      <a href="#eesmark">Eesmärk</a>
+      <a href="#sammud">Sammud</a>
+      <a href="#pildid">Pildid</a>
+      <a href="#kasutamine">Kasutamine</a>
+      <a href="#moju">Mõju</a>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE TABS -->
+<div class="page-tabs">
+  <div class="page-tabs-inner">
+    <a href="index.html" class="page-tab active">📅 Uue kalendri loomine</a>
+    <a href="valem.html" class="page-tab">🧮 Arvutusvälja lisamine</a>
+    <a href="diagramm.html" class="page-tab">📊 Diagrammide loomine</a>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main class="main-wrap">
+
+  <!-- PURPOSE -->
+  <section id="eesmark" style="margin-bottom:100px;">
+    <div class="sec-header">
+      <span class="sec-num">01</span>
+      <h2 class="sec-title">Eesmärk</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="purpose-block">
+      <div class="purpose-cell">
+        <p class="purpose-big">Miks<br><em>kalender</em><br>loeb?</p>
+      </div>
+      <div class="purpose-cell">
+        <h3>Ülesande fookus</h3>
+        <p>Selle veebilehe eesmärk on selgitada, kuidas Microsoft Projectis luua uus kalender, muuta tööaegu ning kasutada seda projekti planeerimisel.</p>
+        <p style="margin-top:16px;">Kalender on projektijuhtimise alustala — see määrab, millistel päevadel ja kellaaegadel saab töö toimuda. Õige kalender teeb ajakava täpsemaks ning ülesannete kestused muutuvad realistlikumaks.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEPS -->
+  <section id="sammud" class="steps-section">
+    <div class="sec-header">
+      <span class="sec-num">02</span>
+      <h2 class="sec-title">Samm-sammuline juhend</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-badge">1</div>
+        <div>
+          <h3>Ava Microsoft Project</h3>
+          <p>Käivita Microsoft Project ja ava olemasolev projekt või loo uus projektifail. Seejärel vali menüüst <strong>Project</strong>.</p>
+        </div>
+        <div class="step-num-big">01</div>
+      </div>
+      <div class="step-card">
+        <div class="step-badge">2</div>
+        <h3>Ava tööaja muutmise aken</h3>
+        <p>Menüü <strong>Project</strong> alt vali <strong>Change Working Time</strong>. Selles aknas saab hallata kalendreid, muuta tööpäevi ja lisada erandeid.</p>
+        <div class="step-num-big">02</div>
+      </div>
+      <div class="step-card">
+        <div class="step-badge">3</div>
+        <h3>Loo uus kalender</h3>
+        <p>Vajuta <strong>Create New Calendar</strong>. Sisesta nimi ning vali, kas luua tühi kalender või koopia olemasolevast. Tavaliselt sobib standardkalendri kopeerimine aluseks.</p>
+        <div class="step-num-big">03</div>
+      </div>
+      <div class="step-card">
+        <div class="step-badge">4</div>
+        <h3>Muuda tööpäevi ja -aegu</h3>
+        <p>Vali nädalapäevad ja määra tööajad — näiteks <strong>08:00–12:00</strong> ja <strong>13:00–17:00</strong>. Saab ka puhkepäevad märkida.</p>
+        <div class="step-num-big">04</div>
+      </div>
+      <div class="step-card">
+        <div class="step-badge">5</div>
+        <h3>Lisa eripäevad ja puhkused</h3>
+        <p>Vahekaardil <strong>Exceptions</strong> lisa riigipühad, ettevõtte kollektiivpuhkus või muud mittetööpäevad.</p>
+        <div class="step-num-big">05</div>
+      </div>
+      <div class="step-card">
+        <div class="step-badge">6</div>
+        <h3>Rakenda kalender projektile</h3>
+        <p>Ava <strong>Project Information</strong> ja vali loodud kalender väljalt <strong>Calendar</strong>. Nüüd arvutab MS Project ajakava sinu reeglite järgi.</p>
+        <div class="step-num-big">06</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="pildid" class="gallery-section">
+    <div class="sec-header">
+      <span class="sec-num">03</span>
+      <h2 class="sec-title">Ekraanipildid</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="gallery-grid">
+      <figure class="gallery-item">
+        <img src="Project/images/calender/step1.png" alt="Change Working Time avamine" class="gallery-img" onclick="openModal(this)">
+        <figcaption class="gallery-caption"><strong>Pilt 1.</strong> Change Working Time avamine.</figcaption>
+      </figure>
+      <figure class="gallery-item">
+        <img src="Project/images/calender/step2.png" alt="Uue kalendri loomine" class="gallery-img" onclick="openModal(this)">
+        <figcaption class="gallery-caption"><strong>Pilt 2.</strong> Uue kalendri loomine.</figcaption>
+      </figure>
+      <figure class="gallery-item">
+        <img src="Project/images/calender/step3.png" alt="Tööaegade muutmine" class="gallery-img" onclick="openModal(this)">
+        <figcaption class="gallery-caption"><strong>Pilt 3.</strong> Tööaegade muutmine.</figcaption>
+      </figure>
+      <figure class="gallery-item">
+        <img src="Project/images/calender/step4.png" alt="Erandite lisamine" class="gallery-img" onclick="openModal(this)">
+        <figcaption class="gallery-caption"><strong>Pilt 4.</strong> Erandite ja puhkepäevade lisamine.</figcaption>
+      </figure>
+      <figure class="gallery-item">
+        <img src="Project/images/calender/step5.png" alt="Kalendri kasutamine" class="gallery-img" onclick="openModal(this)">
+        <figcaption class="gallery-caption"><strong>Pilt 5.</strong> Kalendri kasutamine projektis.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- HOW-TO + IMPACT -->
+  <div class="two-col-section">
+    <div class="info-card" id="kasutamine">
+      <h2>Kuidas kasutada projektis</h2>
+      <p>Kui uus kalender on loodud, saab selle siduda projekti üldise ajakavaga. Selleks tuleb avada <strong>Project Information</strong> ning valida sobiv kalender.</p>
+      <p>Kalendrit saab määrata ka konkreetsetele ressurssidele või ülesannetele — näiteks kui osa töötajaid töötab vahetustega või ainult kindlatel päevadel.</p>
+    </div>
+    <div class="info-card" id="moju">
+      <h2>Mõju ajakavale</h2>
+      <ul class="impact-list">
+        <li>Kalender määrab, millal töö saab toimuda.</li>
+        <li>Mittetööpäevadele ülesandeid ei planeerita.</li>
+        <li>Muudetud tööajad mõjutavad algus- ja lõppkuupäevi.</li>
+        <li>Puhkused võivad projekti kestust pikendada.</li>
+        <li>Õige kalender tagab realistliku ajakava.</li>
+      </ul>
+      <div class="alert-box">
+        <strong>⚠ Oluline:</strong> vale kalender põhjustab valed tähtajad ning projektiplaan ei vasta tegelikule töökorraldusele.
+      </div>
+    </div>
+  </div>
+
+  <!-- GITHUB -->
+  <div class="github-strip">
+    <div>
+      <h2>GitHub</h2>
+      <p><a href="https://github.com/melon3000" target="_blank">github.com/melon3000</a></p>
+      <div class="commit-tags">
+        <span class="commit-tag">Lisa HTML struktuur</span>
+        <span class="commit-tag">Lisa CSS ja pildid</span>
+        <span class="commit-tag">Lisa valem.html ja diagramm.html</span>
+      </div>
+    </div>
+    <div class="github-icon-wrap">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="white"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+    </div>
+  </div>
+
+  <!-- SUMMARY -->
+  <section id="kokkuvote" class="summary-block">
+    <h2>Realistlik ajakava algab <em>õigest</em> kalendrist.</h2>
+    <p>Microsoft Projecti kalender aitab määrata projekti tööaja reeglid. Uue kalendri loomine võimaldab kohandada tööpäevi, tööaegu ja erandeid vastavalt projekti vajadustele.</p>
+  </section>
+
+</main>
+
+<footer>
+  <p>Koostatud Microsoft Projecti õppeülesande jaoks.</p>
+  <span class="footer-badge">MS Project</span>
+</footer>
+
+<div id="imgModal" class="modal">
+  <span class="modal-close" onclick="closeModal()">&times;</span>
+  <img class="modal-content" id="modalImg">
+</div>
+
+<script>
+function openModal(img) {
+  document.getElementById("imgModal").style.display = "flex";
+  document.getElementById("modalImg").src = img.src;
+}
+function closeModal() {
+  document.getElementById("imgModal").style.display = "none";
+}
+document.getElementById("imgModal").addEventListener("click", function(e) { if (e.target === this) closeModal(); });
+document.addEventListener("keydown", function(e) { if (e.key === "Escape") closeModal(); });
+</script>
+</body>
+</html>
