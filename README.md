@@ -1,0 +1,162 @@
+<div align="center">
+
+![header](https://capsule-render.vercel.app/api?type=waving&color=0:1f6feb,100:388bfd&height=200&section=header&text=ProjectLibre&fontSize=60&fontColor=ffffff&fontAlignY=38&desc=Interaktiivne+projektijuhtimise+veebijuhend&descAlignY=58&descSize=18&descColor=c9d1d9&animation=fadeIn)
+
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=16&pause=1000&color=58A6FF&center=true&vCenter=true&width=500&lines=📅+Kalendri+loomine+ProjectLibre'is;📊+Gantti+diagramm+ja+ressursigraafik;🌐+Puhas+HTML+%2F+CSS+%2F+JavaScript)](https://git.io/typing-svg)
+
+---
+
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![License](https://img.shields.io/badge/License-MIT-2ea44f?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge)
+
+</div>
+
+---
+
+## 🎯 Projekti kirjeldus
+
+Selle töö käigus loodi **interaktiivne õppeveeb**, mille eesmärk on aidata kasutajatel õppida ProjectLibre programmi praktilist kasutamist.
+
+Valminud töö ei kirjelda lihtsalt, mis programmis olemas on, vaid näitab **mida selle projekti käigus reaalselt tehti** — loodi veebijuhend, kus on samm-sammult lahti seletatud kalendri loomine, diagrammide kasutamine ning projektiplaneerimise põhilised töövõtted.
+
+---
+
+## 🧩 Töö käigus tehtu
+
+Töö raames:
+
+- loodi **mitmeleheline veebiprojekt**
+- jagati teema kaheks suureks praktiliseks osaks
+- koostati samm-sammulised juhendid ProjectLibre kasutamiseks
+- lisati ekraanipildid, et teha tegevused arusaadavamaks
+- ehitati puhas ja lihtne navigeerimine lehtede vahel
+- kujundati interaktiivne ja kasutajasõbralik õppekeskkond
+
+---
+
+## 🌐 Projekti ülesehitus
+
+Projekt koosneb kahest põhilehest, mis moodustavad koos ühe tervikliku juhendi.
+
+| Leht | Eesmärk | Sammud |
+|------|--------|:------:|
+| `kalender.html` | Uue kalendri loomine ja rakendamine ProjectLibre'is | 6 |
+| `diagrammid.html` | Gantti diagrammi ja ressursigraafiku kasutamine | 4 |
+
+---
+
+## 📄 Realiseeritud tööosad
+
+<table>
+<tr>
+<td width="50%">
+
+### 📅 `kalender.html`
+
+Selle lehe käigus realiseeriti:
+
+| # | Tegevus |
+|---|------|
+| 1 | Resource → Calendar avamine |
+| 2 | Kalendri menüü ja seadete vaatamine |
+| 3 | Uue TestKalendri loomine |
+| 4 | Tööpäevade ja tööaja seadistamine |
+| 5 | Task Calendar rakendamine |
+| 6 | Tulemuse kontrollimine projektil |
+
+</td>
+<td width="50%">
+
+### 📊 `diagrammid.html`
+
+Selle lehe käigus realiseeriti:
+
+| # | Tegevus |
+|---|------|
+| 1 | Task → Gantt avamine |
+| 2 | Gantti diagrammi kasutamine ajakava vaatamiseks |
+| 3 | Views → Resource Usage avamine |
+| 4 | Ressursside tööaja ja kasutuse analüüs |
+
+</td>
+</tr>
+</table>
+
+---
+
+## ✨ Realiseeritud funktsionaalsus
+
+| Funktsioon | Kirjeldus |
+|---|---|
+| 📌 Kleepuv navigatsioon | Jääb lehe ülaossa kerimise ajal |
+| 🔍 Piltide modal | Võimaldab pilte suurendada |
+| ⌨️ `Esc` klahv | Sulgeb modali kiiresti |
+| 🎬 Hero animatsioon | Sissefade ja liikuv ruudustik |
+| 📱 Reageeriv kujundus | Töötab mobiilis ja lauaarvutis |
+| 🗂 Vahelehtede navigeerimine | Lihtne liikumine lehtede vahel |
+
+---
+
+## 🛠 Tehniline teostus
+
+Projekt valmis ilma raamistiketa ning kasutab ainult põhilisi veebitehnoloogiaid.
+
+| Tehnoloogia | Kasutus |
+|---|---|
+| `HTML5` | Lehe struktuur ja semantika |
+| `CSS3` | Kujundus, animatsioonid ja paigutus |
+| `Vanilla JS` | Modal, sündmuste haldus ja interaktiivsus |
+| `Google Fonts` | Syne + DM Sans tüpograafia |
+
+---
+
+## 💡 Projekti praktiline väärtus
+
+Valminud veebijuhend aitab:
+
+- õppida ProjectLibre'i praktiliselt
+- mõista, kuidas seadistada tööaega ja kalendreid
+- kasutada Gantti diagrammi projekti ajakava jälgimiseks
+- vaadata ressursside kasutust ja töökoormust
+- muuta projektijuhtimise õppimine visuaalsemaks ja lihtsamaks
+
+---
+
+## 📊 GitHub statistika
+
+<div align="center">
+
+![GitHub repo size](https://img.shields.io/github/repo-size/melon3000/projectlibre-juhend?style=flat-square&color=1f6feb&label=Repo+suurus)
+![GitHub last commit](https://img.shields.io/github/last-commit/melon3000/projectlibre-juhend?style=flat-square&color=238636&label=Viimane+commit)
+![GitHub stars](https://img.shields.io/github/stars/melon3000/projectlibre-juhend?style=flat-square&color=e3b341&label=Tähed)
+
+</div>
+
+---
+
+## 🧾 Kokkuvõte
+
+Selle töö tulemusena valmis **ProjectLibre õppeveeb**, mis ühendab endas:
+
+- praktilise juhendi
+- visuaalsed ekraanipildid
+- mitmelehelise struktuuri
+- selge navigeerimise
+- kasutajasõbraliku kujunduse
+
+Projekt näitab, kuidas veebilahenduse abil saab teha projektijuhtimistarkvara õppimise lihtsamaks, loogilisemaks ja arusaadavamaks.
+
+---
+
+<div align="center">
+
+![footer](https://capsule-render.vercel.app/api?type=waving&color=0:388bfd,100:1f6feb&height=100&section=footer)
+
+**melon3000** · Koostatud ProjectLibre õppeülesande jaoks
+
+[![GitHub](https://img.shields.io/badge/GitHub-melon3000-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/melon3000)
+
+</div>
