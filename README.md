@@ -1,60 +1,16 @@
 <div align="center">
 
-<svg width="800" height="200" viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <style>
-      @keyframes pulse { 0%,100%{opacity:.25} 50%{opacity:.85} }
-      @keyframes fade { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
-      .p1{animation:pulse 2.4s 0s infinite}
-      .p2{animation:pulse 2.4s .3s infinite}
-      .p3{animation:pulse 2.4s .6s infinite}
-      .p4{animation:pulse 2.4s .9s infinite}
-      .p5{animation:pulse 2.4s 1.2s infinite}
-      .title{animation:fade .6s .1s both}
-      .sub{animation:fade .6s .3s both}
-      .badges{animation:fade .6s .5s both}
-    </style>
-  </defs>
-  <rect width="800" height="200" fill="#0d1117" rx="12"/>
-  <!-- grid -->
-  <line x1="0" y1="50" x2="800" y2="50" stroke="#21262d" stroke-width=".5"/>
-  <line x1="0" y1="100" x2="800" y2="100" stroke="#21262d" stroke-width=".5"/>
-  <line x1="0" y1="150" x2="800" y2="150" stroke="#21262d" stroke-width=".5"/>
-  <line x1="200" y1="0" x2="200" y2="200" stroke="#21262d" stroke-width=".5"/>
-  <line x1="400" y1="0" x2="400" y2="200" stroke="#21262d" stroke-width=".5"/>
-  <line x1="600" y1="0" x2="600" y2="200" stroke="#21262d" stroke-width=".5"/>
-  <!-- glow -->
-  <ellipse cx="390" cy="100" rx="260" ry="70" fill="#1f6feb" opacity=".1"/>
-  <!-- calendar icon -->
-  <rect x="40" y="65" width="70" height="70" rx="8" fill="none" stroke="#388bfd" stroke-width="1.5"/>
-  <rect x="40" y="65" width="70" height="20" rx="8" fill="#1f6feb" opacity=".5"/>
-  <line x1="62" y1="57" x2="62" y2="73" stroke="#58a6ff" stroke-width="2" stroke-linecap="round"/>
-  <line x1="98" y1="57" x2="98" y2="73" stroke="#58a6ff" stroke-width="2" stroke-linecap="round"/>
-  <rect x="52" y="97" width="12" height="12" rx="2" fill="#58a6ff" class="p1"/>
-  <rect x="70" y="97" width="12" height="12" rx="2" fill="#58a6ff" class="p2"/>
-  <rect x="88" y="97" width="12" height="12" rx="2" fill="#3fb950" class="p3"/>
-  <rect x="52" y="115" width="12" height="12" rx="2" fill="#58a6ff" class="p4"/>
-  <rect x="70" y="115" width="12" height="12" rx="2" fill="#58a6ff" class="p5"/>
-  <!-- text -->
-  <text class="title" x="132" y="108" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="40" font-weight="700" letter-spacing="-1" fill="#e6edf3">ProjectLibre</text>
-  <text class="sub" x="134" y="132" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="15" fill="#8b949e">Interaktiivne projektijuhtimise õpetlik veebijuhend</text>
-  <g class="badges">
-    <rect x="134" y="148" width="68" height="22" rx="11" fill="#238636" opacity=".3"/>
-    <text x="168" y="163" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" fill="#3fb950">● Kalender</text>
-    <rect x="212" y="148" width="82" height="22" rx="11" fill="#1f6feb" opacity=".3"/>
-    <text x="253" y="163" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" fill="#58a6ff">● Diagrammid</text>
-    <rect x="305" y="148" width="68" height="22" rx="11" fill="#6e40c9" opacity=".3"/>
-    <text x="339" y="163" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" fill="#bc8cff">● HTML/CSS</text>
-  </g>
-</svg>
+![header](https://capsule-render.vercel.app/api?type=waving&color=0:1f6feb,100:388bfd&height=200&section=header&text=ProjectLibre&fontSize=60&fontColor=ffffff&fontAlignY=38&desc=Interaktiivne+projektijuhtimise+veebijuhend&descAlignY=58&descSize=18&descColor=c9d1d9&animation=fadeIn)
 
-# ProjectLibre — Õpetlik Veebijuhend
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=16&pause=1000&color=58A6FF&center=true&vCenter=true&width=500&lines=📅+Kalendri+loomine+ProjectLibre'is;📊+Gantti+diagramm+ja+ressursigraafik;🌐+Puhas+HTML+%2F+CSS+%2F+JavaScript)](https://git.io/typing-svg)
 
-[![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](.)
-[![CSS](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)](.)
-[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](.)
-[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](.)
-[![Status](https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge)](.)
+---
+
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![License](https://img.shields.io/badge/License-MIT-2ea44f?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge)
 
 </div>
 
@@ -172,14 +128,24 @@ xdg-open kalender.html     # Linux
 
 ---
 
-## 👤 Autor
+## 📊 GitHub statistika
 
 <div align="center">
 
-**melon3000**
+![GitHub repo size](https://img.shields.io/github/repo-size/melon3000/projectlibre-juhend?style=flat-square&color=1f6feb&label=Repo+suurus)
+![GitHub last commit](https://img.shields.io/github/last-commit/melon3000/projectlibre-juhend?style=flat-square&color=238636&label=Viimane+commit)
+![GitHub stars](https://img.shields.io/github/stars/melon3000/projectlibre-juhend?style=flat-square&color=e3b341&label=Tähed)
+
+</div>
+
+---
+
+<div align="center">
+
+![footer](https://capsule-render.vercel.app/api?type=waving&color=0:388bfd,100:1f6feb&height=100&section=footer)
+
+**melon3000** · Koostatud ProjectLibre õppeülesande jaoks
 
 [![GitHub](https://img.shields.io/badge/GitHub-melon3000-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/melon3000)
-
-*Koostatud ProjectLibre õppeülesande jaoks*
 
 </div>
