@@ -1,3 +1,4 @@
+```md
 <div align="center">
 
 ![header](https://capsule-render.vercel.app/api?type=waving&color=0:e8400c,100:c9a84c&height=200&section=header&text=MS+Project&fontSize=60&fontColor=ffffff&fontAlignY=38&desc=Kalender+·+Arvutusväli+·+Diagrammid&descAlignY=58&descSize=18&descColor=f0f6fc&animation=fadeIn)
@@ -16,20 +17,39 @@
 
 ---
 
-## 📖 Mis on lehel tehtud
+## 🎯 Projekti kirjeldus
 
-Loodud on veebiprojekt, mis koosneb **kolmest lehest**, kus on realiseeritud Microsoft Projecti põhilised funktsioonid.  
-Iga leht näitab konkreetset protsessi samm-sammult koos visuaalide ja selgitustega.
+Selle töö käigus loodi **õppeveeb**, mille eesmärk on aidata kasutajatel õppida Microsoft Projecti kasutamist läbi praktiliste näidete.
 
-| Leht | Mis on tehtud | Sammud |
-|------|---------------|:------:|
-| `index.html` | Projekti kalendri seadistamine | 6 |
-| `valem.html` | Valemite loomine ja kasutamine | 6 |
-| `diagramm.html` | Diagrammide kasutamine ja seadistamine | 6 |
+Projekt ei ole lihtsalt informatiivne leht, vaid **praktiline juhend**, mis näitab samm-sammult, kuidas kasutada olulisi Microsoft Projecti funktsioone, nagu kalender, arvutusväljad ja diagrammid.
 
 ---
 
-## 📄 Lehed
+## 🧩 Töö käigus tehtu
+
+Töö raames:
+
+- loodi **täielik mitmeleheline veebileht**
+- jagati teema kolme loogilisse ossa
+- realiseeriti praktilised Microsoft Projecti töövõtted
+- lisati selgitavad tekstid ja visuaalid
+- ehitati lihtne ja kasutajasõbralik navigeerimine
+
+---
+
+## 🌐 Veebistruktuur
+
+Projekt koosneb **kolmest põhilehest**, mis töötavad koos ühe tervikliku õppeprojektina.
+
+| Leht | Eesmärk | Sammud |
+|------|--------|:------:|
+| `index.html` | Projekti kalendri loomine ja seadistamine | 6 |
+| `valem.html` | Arvutusväljade loomine ja valemite kasutamine | 6 |
+| `diagramm.html` | Diagrammide loomine, kohandamine ja kasutamine | 6 |
+
+---
+
+## 📄 Projekti sisu
 
 <div align="center">
 
@@ -37,9 +57,9 @@ Iga leht näitab konkreetset protsessi samm-sammult koos visuaalide ja selgitust
 <tr>
 <td width="33%" valign="top">
 
-### 📅 `index.html` — Kalender
+### 📅 Kalender
 
-**Realiseeritud:**
+Selle lehe eesmärk on näidata, kuidas Microsoft Projectis kalendrit kasutada.
 
 | # | Tegevus |
 |---|---------|
@@ -54,9 +74,9 @@ Iga leht näitab konkreetset protsessi samm-sammult koos visuaalide ja selgitust
 
 <td width="33%" valign="top">
 
-### 🧮 `valem.html` — Arvutusväli
+### 🧮 Arvutusväli
 
-**Realiseeritud:**
+Selle lehe eesmärk on tutvustada arvutusväljade kasutamist.
 
 | # | Tegevus |
 |---|---------|
@@ -69,9 +89,9 @@ Iga leht näitab konkreetset protsessi samm-sammult koos visuaalide ja selgitust
 
 <td width="33%" valign="top">
 
-### 📊 `diagramm.html` — Diagrammid
+### 📊 Diagrammid
 
-**Realiseeritud:**
+Selle lehe eesmärk on näidata diagrammide kasutamist projektide visualiseerimiseks.
 
 | # | Tegevus |
 |---|---------|
@@ -90,16 +110,28 @@ Iga leht näitab konkreetset protsessi samm-sammult koos visuaalide ja selgitust
 
 ---
 
-## ✨ Funktsionaalsus
+## ✨ Realiseeritud funktsionaalsus
 
 | Funktsioon | Kirjeldus |
 |---|---|
-| 📌 Navigatsioon | Jääb lehe ülaossa |
-| 🗂 Lehed | 3 omavahel seotud lehte |
-| 🔍 Modal | Pildi suurendamine |
-| ⌨️ Esc | Modali sulgemine |
-| 🎬 Animatsioonid | Fade ja grid efektid |
-| 📱 Responsive | Töötab kõigil seadmetel |
+| 📌 Navigatsioon | Ülemine menüü lehtede vahel liikumiseks |
+| 🗂 Mitmeleheline struktuur | 3 omavahel seotud HTML lehte |
+| 🔍 Modal | Piltide suurendamise võimalus |
+| ⌨️ Esc | Modali sulgemine klaviatuuriga |
+| 🎬 Animatsioonid | Fade, hover ja grid efektid |
+| 📱 Responsive | Kohandub erinevate ekraanisuurustega |
+
+---
+
+## 💡 Projekti väärtus
+
+Valminud veebileht aitab:
+
+- õppida Microsoft Projecti praktiliselt
+- mõista tarkvara põhifunktsioone lihtsamalt
+- kasutada kalendreid, valemeid ja diagramme teadlikumalt
+
+See töö on loodud selleks, et muuta Microsoft Projecti õppimine arusaadavamaks ja visuaalselt selgemaks.
 
 ---
 
@@ -114,10 +146,23 @@ Iga leht näitab konkreetset protsessi samm-sammult koos visuaalide ja selgitust
 
 | Tehnoloogia | Kasutus |
 |---|---|
-| `HTML5` | Struktuur |
-| `CSS3` | Kujundus ja animatsioon |
+| `HTML5` | Lehe struktuur |
+| `CSS3` | Kujundus ja animatsioonid |
 | `JavaScript` | Interaktiivsus |
 | `Google Fonts` | Tüpograafia |
+
+---
+
+## 🧾 Kokkuvõte
+
+Selle töö tulemusena valmis **õppeveeb Microsoft Projecti jaoks**, mis ühendab:
+
+- praktilise juhendi
+- visuaalse esituse
+- mitmelehelise struktuuri
+- kasutajasõbraliku navigeerimise
+
+Projekt näitab, kuidas veebilahenduse abil saab selgitada keerulist tarkvara lihtsalt, arusaadavalt ja visuaalselt.
 
 ---
 
@@ -130,3 +175,4 @@ Iga leht näitab konkreetset protsessi samm-sammult koos visuaalide ja selgitust
 [![GitHub](https://img.shields.io/badge/GitHub-melon3000-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/melon3000)
 
 </div>
+```
