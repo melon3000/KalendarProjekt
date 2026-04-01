@@ -2,7 +2,7 @@
 
 ![header](https://capsule-render.vercel.app/api?type=waving&color=0:e8400c,100:c9a84c&height=200&section=header&text=MS+Project&fontSize=60&fontColor=ffffff&fontAlignY=38&desc=Kalender+·+Arvutusväli+·+Diagrammid&descAlignY=58&descSize=18&descColor=f0f6fc&animation=fadeIn)
 
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=16&pause=1000&color=FF7B72&center=true&vCenter=true&width=540&lines=📅+Uue+kalendri+loomine;🧮+Arvutusvälja+lisamine;📊+Gantti+diagramm+ja+ressursigraafik)](https://git.io/typing-svg)
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=16&pause=1000&color=FF7B72&center=true&vCenter=true&width=540&lines=📅+Kalender+loodud;🧮+Valemid+lisatud;📊+Diagrammid+loodud)](https://git.io/typing-svg)
 
 ---
 
@@ -16,15 +16,16 @@
 
 ---
 
-## 📖 Ülevaade
+## 📖 Mis on lehel tehtud
 
-Interaktiivne **kolmeleheline** veebijuhend Microsoft Projecti põhifunktsioonide kohta. Iga teema on eraldi lehel koos samm-sammulise juhendi ja ekraanipiltidega.
+Loodud on veebiprojekt, mis koosneb **kolmest lehest**, kus on realiseeritud Microsoft Projecti põhilised funktsioonid.  
+Iga leht näitab konkreetset protsessi samm-sammult koos visuaalide ja selgitustega.
 
-| Leht | Teema | Sammude arv |
-|------|-------|:-----------:|
-| `index.html` | 📅 Uue kalendri loomine | 6 |
-| `valem.html` | 🧮 Arvutusvälja lisamine | 6 |
-| `diagramm.html` | 📊 Diagrammide loomine | 6 |
+| Leht | Mis on tehtud | Sammud |
+|------|---------------|:------:|
+| `index.html` | Projekti kalendri seadistamine | 6 |
+| `valem.html` | Valemite loomine ja kasutamine | 6 |
+| `diagramm.html` | Diagrammide kasutamine ja seadistamine | 6 |
 
 ---
 
@@ -36,13 +37,15 @@ Interaktiivne **kolmeleheline** veebijuhend Microsoft Projecti põhifunktsioonid
 
 ### 📅 `index.html` — Kalender
 
-| # | Samm |
-|---|------|
+Realiseeritud:
+
+| # | Tegevus |
+|---|---------|
 | 1 | Microsoft Projecti avamine |
-| 2 | Change Working Time aken |
+| 2 | Change Working Time kasutamine |
 | 3 | Uue kalendri loomine |
-| 4 | Tööpäevade ja -aegade muutmine |
-| 5 | Eripäevade ja pühade lisamine |
+| 4 | Tööaja muutmine |
+| 5 | Pühade ja erandite lisamine |
 | 6 | Kalendri rakendamine projektile |
 
 </td>
@@ -50,22 +53,31 @@ Interaktiivne **kolmeleheline** veebijuhend Microsoft Projecti põhifunktsioonid
 
 ### 📊 `diagramm.html` — Diagrammid
 
-| # | Samm |
-|---|------|
+Realiseeritud:
+
+| # | Tegevus |
+|---|---------|
 | 1 | Gantti diagrammi avamine |
 | 2 | Ülesannete lisamine |
-| 3 | Ajaskaala kohandamine |
+| 3 | Ajaskaala seadistamine |
 | 4 | Bar Styles muutmine |
 | 5 | Kriitilise tee kuvamine |
-| 6 | Printimine ja eksport |
+| 6 | Eksport ja printimine |
 
 </td>
 </tr>
 </table>
 
+---
+
 ### 🧮 `valem.html` — Arvutusväli
 
-Juhend kohandatud arvutusvälja loomiseks MS Projectis — valemite sisestamine, väljade kuvamine ja tulemuste analüüs.
+Realiseeritud:
+
+- Arvutusvälja loomine  
+- Valemite sisestamine  
+- Tulemuste kuvamine  
+- Andmete analüüs  
 
 ---
 
@@ -73,18 +85,19 @@ Juhend kohandatud arvutusvälja loomiseks MS Projectis — valemite sisestamine,
 
 | Funktsioon | Kirjeldus |
 |---|---|
-| 📌 Kleepuv navigatsioon | Jääb lehe ülaossa kerimise ajal |
-| 🗂 3 vaheleht | Kalender / Arvutusväli / Diagrammid |
-| 🔍 Piltide modal | Klõpsa pildil suurendamiseks |
-| ⌨️ `Esc` klahv | Sulgeb modali |
-| 🎬 Hero animatsioon | Sissefade + liikuv ruudustik |
-| 📱 Reageeriv kujundus | Töötab mobiilis ja lauaarvutis |
+| 📌 Navigatsioon | Jääb lehe ülaossa |
+| 🗂 Lehed | 3 omavahel seotud lehte |
+| 🔍 Modal | Pildi suurendamine |
+| ⌨️ Esc | Modali sulgemine |
+| 🎬 Animatsioonid | Fade ja grid efektid |
+| 📱 Responsive | Töötab kõigil seadmetel |
 
 ---
 
-## ⚠️ Oluline teada
+## ⚠️ Oluline
 
-> **Vale kalender = valed tähtajad.** Kontrolli alati, et õige kalender oleks projektile rakendatud — `Project Information → Calendar`. Ilma selleta ei vasta projektiplaan tegelikule töökorraldusele.
+> Kui kasutatakse vale kalendrit, siis projekti ajakava ei ole korrektne.  
+> Kontrolli alati, et õige kalender oleks valitud.
 
 ---
 
@@ -92,10 +105,10 @@ Juhend kohandatud arvutusvälja loomiseks MS Projectis — valemite sisestamine,
 
 | Tehnoloogia | Kasutus |
 |---|---|
-| `HTML5` | Lehe struktuur ja semantika |
-| `CSS3` | Kujundus, animatsioonid, grid |
-| `Vanilla JS` | Modal, sündmuste haldus |
-| `Google Fonts` | Syne + DM Sans |
+| `HTML5` | Struktuur |
+| `CSS3` | Kujundus ja animatsioon |
+| `JavaScript` | Interaktiivsus |
+| `Google Fonts` | Tüpograafia |
 
 ---
 
