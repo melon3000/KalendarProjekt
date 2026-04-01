@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Microsoft Project — Arvutusvälja Lisamine</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0a0f1e;
+      --paper: #f5f0e8;
+      --accent: #0057ff;
+      --accent2: #7c3aed;
+      --gold: #c9a84c;
+      --muted: #7a7567;
+      --card-bg: #ffffff;
+      --border: rgba(10,15,30,0.12);
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background-color: var(--paper); color: var(--ink); overflow-x: hidden; }
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 9999; opacity: .35;
+    }
+
+    /* HERO */
+    .hero { min-height: 100vh; display: grid; grid-template-rows: 1fr auto; position: relative; overflow: hidden; padding: 0 clamp(24px, 6vw, 100px); }
+    .hero-bg { position: absolute; inset: 0; background: var(--ink); z-index: 0; }
+    .hero-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 110% 20%, rgba(124,58,237,0.4) 0%, transparent 60%),
+                  radial-gradient(ellipse 50% 70% at -10% 80%, rgba(0,87,255,0.3) 0%, transparent 55%);
+    }
+    .hero-grid-lines {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 80px 80px; animation: gridShift 20s linear infinite;
+    }
+    @keyframes gridShift { from { transform: translateY(0); } to { transform: translateY(80px); } }
+    .hero-content { position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; padding: 120px 0 60px; max-width: 1100px; margin: 0 auto; width: 100%; }
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: 10px; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 32px; opacity: 0; animation: fadeUp 0.8s 0.2s ease forwards; }
+    .hero-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--gold); }
+    .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(3rem, 8vw, 7rem); font-weight: 800; line-height: 0.95; color: #fff; letter-spacing: -0.03em; margin-bottom: 36px; opacity: 0; animation: fadeUp 0.9s 0.35s ease forwards; }
+    .hero h1 em { font-style: normal; color: #818cf8; }
+    .hero-sub { max-width: 560px; font-size: 1.1rem; font-weight: 300; color: rgba(255,255,255,0.65); line-height: 1.7; opacity: 0; animation: fadeUp 0.9s 0.5s ease forwards; }
+    .hero-scroll { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; width: 100%; padding: 32px 0; display: flex; align-items: center; gap: 12px; color: rgba(255,255,255,0.35); font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0; animation: fadeUp 0.9s 0.9s ease forwards; }
+    .scroll-line { width: 40px; height: 1px; background: rgba(255,255,255,0.25); position: relative; overflow: hidden; }
+    .scroll-line::after { content: ''; position: absolute; left: -100%; top: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.6); animation: scrollPulse 2s 1.5s ease infinite; }
+    @keyframes scrollPulse { 0% { left: -100%; } 100% { left: 100%; } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* NAV */
+    .nav { position: sticky; top: 0; z-index: 800; background: rgba(245,240,232,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 clamp(24px, 6vw, 100px); display: flex; align-items: center; justify-content: space-between; height: 60px; }
+    .nav-brand { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem; letter-spacing: 0.04em; color: var(--ink); text-decoration: none; }
+    .nav-brand span { color: var(--accent); }
+    .nav-links { display: flex; gap: 4px; }
+    .nav-links a { text-decoration: none; color: var(--muted); font-size: 0.82rem; font-weight: 500; padding: 6px 14px; border-radius: 100px; transition: all 0.2s ease; }
+    .nav-links a:hover { color: var(--ink); background: rgba(10,15,30,0.06); }
+
+    /* PAGE TABS */
+    .page-tabs { background: var(--ink); padding: 0 clamp(24px, 6vw, 100px); }
+    .page-tabs-inner { max-width: 1200px; margin: 0 auto; display: flex; gap: 0; }
+    .page-tab { text-decoration: none; color: rgba(255,255,255,0.5); font-size: 0.82rem; font-weight: 500; padding: 14px 20px; border-bottom: 2px solid transparent; transition: all 0.2s ease; white-space: nowrap; }
+    .page-tab:hover { color: rgba(255,255,255,0.85); }
+    .page-tab.active { color: #fff; border-bottom-color: #818cf8; }
+
+    /* MAIN */
+    .main-wrap { max-width: 1200px; margin: 0 auto; padding: 80px clamp(24px, 6vw, 100px); }
+    .sec-header { display: flex; align-items: baseline; gap: 16px; margin-bottom: 48px; }
+    .sec-num { font-family: 'Syne', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; color: var(--accent); text-transform: uppercase; }
+    .sec-title { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700; color: var(--ink); letter-spacing: -0.03em; line-height: 1.1; }
+    .sec-line { flex: 1; height: 1px; background: var(--border); }
+
+    /* INTRO BLOCK */
+    .intro-block { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; margin-bottom: 100px; }
+    .intro-cell { background: var(--card-bg); padding: 48px; }
+    .intro-cell:first-child { border-right: 1px solid var(--border); }
+    .intro-cell h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; }
+    .intro-cell p { font-size: 1.05rem; line-height: 1.75; color: #3a3a3a; }
+    .intro-big { font-family: 'Syne', sans-serif; font-size: clamp(2.4rem, 5vw, 4.2rem); font-weight: 800; color: var(--ink); line-height: 1.05; letter-spacing: -0.04em; }
+    .intro-big em { font-style: normal; color: var(--accent); }
+
+    /* STEPS */
+    .steps-section { margin-bottom: 100px; }
+    .steps-list { display: flex; flex-direction: column; gap: 20px; }
+    .step-row { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 36px 40px; display: grid; grid-template-columns: 56px 1fr; gap: 32px; align-items: start; position: relative; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .step-row:hover { transform: translateY(-3px); box-shadow: 0 16px 48px rgba(10,15,30,0.09); }
+    .step-row::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent), var(--accent2)); opacity: 0; transition: opacity 0.3s; }
+    .step-row:hover::before { opacity: 1; }
+    .step-badge { width: 56px; height: 56px; border-radius: 16px; background: var(--ink); color: white; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .step-body h3 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--ink); margin-bottom: 10px; }
+    .step-body p { font-size: 0.96rem; line-height: 1.75; color: #525252; }
+    .step-body strong { color: var(--ink); font-weight: 600; }
+    .step-body code { background: rgba(0,87,255,0.08); color: var(--accent); padding: 2px 8px; border-radius: 6px; font-family: 'Courier New', monospace; font-size: 0.88em; }
+
+    /* FORMULA BOX */
+    .formula-section { margin-bottom: 100px; }
+    .formula-box { background: var(--ink); border-radius: 20px; padding: 48px; color: white; }
+    .formula-box h3 { font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 24px; color: rgba(255,255,255,0.9); }
+    .formula-examples { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .formula-card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 24px; }
+    .formula-card h4 { font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #818cf8; margin-bottom: 14px; }
+    .formula-code { background: rgba(0,0,0,0.3); border-radius: 10px; padding: 16px 20px; font-family: 'Courier New', monospace; font-size: 0.9rem; color: #a5f3a5; line-height: 1.5; border: 1px solid rgba(255,255,255,0.06); }
+    .formula-desc { margin-top: 12px; font-size: 0.85rem; color: rgba(255,255,255,0.5); line-height: 1.5; }
+
+    /* GALLERY */
+    .gallery-section { margin-bottom: 100px; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
+    .gallery-item { border-radius: 16px; overflow: hidden; border: 1px solid var(--border); }
+    .gallery-item:nth-child(1) { grid-column: span 7; }
+    .gallery-item:nth-child(2) { grid-column: span 5; }
+    .gallery-item:nth-child(3) { grid-column: span 6; }
+    .gallery-item:nth-child(4) { grid-column: span 6; }
+    .gallery-img { width: 100%; height: 240px; object-fit: cover; display: block; cursor: zoom-in; background: linear-gradient(135deg, #e0e8ff 0%, #d0d9ff 100%); }
+    .gallery-caption { padding: 16px 20px; font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--border); background: var(--card-bg); }
+    .gallery-caption strong { color: var(--ink); font-weight: 600; }
+
+    /* INFO */
+    .info-wide { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 48px; margin-bottom: 100px; }
+    .info-wide h2 { font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--ink); letter-spacing: -0.02em; margin-bottom: 24px; }
+    .info-wide p { font-size: 0.97rem; line-height: 1.75; color: #525252; margin-bottom: 16px; max-width: 820px; }
+    .tip-box { margin-top: 28px; padding: 20px 24px; background: #f0f4ff; border: 1px solid rgba(0,87,255,0.2); border-radius: 14px; font-size: 0.9rem; line-height: 1.65; color: #1a3a6b; }
+    .tip-box strong { color: var(--accent); }
+
+    /* VIDEO */
+    .video-section { margin-bottom: 100px; }
+    .video-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 48px; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 40px; }
+    .video-card h2 { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 700; color: var(--ink); margin-bottom: 12px; }
+    .video-card p { font-size: 0.95rem; color: #525252; line-height: 1.65; max-width: 520px; }
+    .video-btn { display: inline-flex; align-items: center; gap: 10px; margin-top: 24px; padding: 14px 28px; background: var(--accent); color: white; text-decoration: none; border-radius: 100px; font-weight: 600; font-size: 0.9rem; transition: opacity 0.2s; }
+    .video-btn:hover { opacity: 0.85; }
+    .video-thumb { width: 200px; height: 120px; border-radius: 14px; background: linear-gradient(135deg, #1a1a2e, #16213e); display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid var(--border); }
+    .play-icon { width: 48px; height: 48px; background: rgba(255,255,255,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+
+    /* MODAL */
+    .modal { display: none; position: fixed; z-index: 99999; inset: 0; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; }
+    .modal-content { max-width: 90%; max-height: 90%; border-radius: 12px; animation: zoomIn 0.3s ease; }
+    .modal-close { position: absolute; top: 30px; right: 40px; font-size: 40px; color: white; cursor: pointer; }
+    @keyframes zoomIn { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border); padding: 32px clamp(24px, 6vw, 100px); display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; }
+    footer p { font-size: 0.82rem; color: var(--muted); }
+    .footer-badge { font-family: 'Syne', sans-serif; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); padding: 6px 14px; border: 1px solid rgba(0,87,255,0.25); border-radius: 100px; }
+
+    @media (max-width: 900px) {
+      .intro-block { grid-template-columns: 1fr; }
+      .intro-cell:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+      .formula-examples { grid-template-columns: 1fr; }
+      .video-card { grid-template-columns: 1fr; }
+      .video-thumb { display: none; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-item { grid-column: span 1 !important; }
+      .nav-links { display: none; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+    }
+    @media (max-width: 520px) {
+      .step-row { grid-template-columns: 1fr; }
+      .intro-cell { padding: 30px 24px; }
+      .page-tabs-inner { overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"><div class="hero-grid-lines"></div></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Microsoft Project · Arvutusväljad</p>
+    <h1>Arvutusvälja<br><em>lisamine</em><br>projekti</h1>
+    <p class="hero-sub">Õpi looma kohandatud arvutusvälju (Custom Fields) ja valemeid, mis aitavad automaatselt arvutada projekti andmeid.</p>
+  </div>
+  <div class="hero-scroll"><div class="scroll-line"></div>Keri alla</div>
+</section>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">MS Project <span>·</span> Juhend</a>
+    <div class="nav-links">
+      <a href="#mis">Mis on arvutusväli</a>
+      <a href="#sammud">Sammud</a>
+      <a href="#valemid">Valemid</a>
+      <a href="#pildid">Pildid</a>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE TABS -->
+<div class="page-tabs">
+  <div class="page-tabs-inner">
+    <a href="index.html" class="page-tab">📅 Uue kalendri loomine</a>
+    <a href="valem.html" class="page-tab active">🧮 Arvutusvälja lisamine</a>
+    <a href="diagramm.html" class="page-tab">📊 Diagrammide loomine</a>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main class="main-wrap">
+
+  <!-- INTRO -->
+  <section id="mis" style="margin-bottom:100px;">
+    <div class="sec-header">
+      <span class="sec-num">01</span>
+      <h2 class="sec-title">Mis on arvutusväli?</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="intro-block">
+      <div class="intro-cell">
+        <p class="intro-big">Custom<br><em>Fields</em><br>& valemid</p>
+      </div>
+      <div class="intro-cell">
+        <h3>Miks kasutada?</h3>
+        <p>Arvutusväljad (Custom Fields) võimaldavad lisada MS Projecti tabelitesse uusi veerge, mille väärtused arvutatakse automaatselt valemi alusel.</p>
+        <p style="margin-top:16px;">Näiteks saab automaatselt arvutada eelarve ületamise protsendi, ülesande staatuse värvi indikaatori või ressursi koormuse taseme — kõik see ilma käsitsi sisestamata.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEPS -->
+  <section id="sammud" class="steps-section">
+    <div class="sec-header">
+      <span class="sec-num">02</span>
+      <h2 class="sec-title">Samm-sammuline juhend</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="steps-list">
+      <div class="step-row">
+        <div class="step-badge">1</div>
+        <div class="step-body">
+          <h3>Ava kohandatud väljade aken</h3>
+          <p>Klõpsa ülaosas vahekaardil <strong>Project</strong>, seejärel vali <strong>Custom Fields</strong>. Avaneb aken, kus saad hallata kõiki kohandatud välju.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-badge">2</div>
+        <div class="step-body">
+          <h3>Vali välja tüüp</h3>
+          <p>Ülaosas vali, kas väli kuulub <strong>Task</strong> (ülesanne), <strong>Resource</strong> (ressurss) või <strong>Project</strong> tasemele. Seejärel vali välja andmetüüp: <code>Number</code>, <code>Text</code>, <code>Cost</code>, <code>Date</code> või <code>Flag</code>.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-badge">3</div>
+        <div class="step-body">
+          <h3>Nimeta väli ümber</h3>
+          <p>Klõpsa nupul <strong>Rename</strong> ja anna väljale arusaadav nimi, näiteks <strong>"Eelarve kasutus %"</strong> või <strong>"Staatus"</strong>. See nimi ilmub hiljem veeru päisesse.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-badge">4</div>
+        <div class="step-body">
+          <h3>Lisa valem</h3>
+          <p>Klõpsa <strong>Formula</strong> nupul. Avaneb valemi redaktor, kus saad kirjutada arvutusvalemi. Kasuta MS Projecti sisseehitatud välju, funktsioone ja tehtemärke.</p>
+          <p style="margin-top:8px;">Näide: <code>[Actual Cost] / [Baseline Cost] * 100</code> — arvutab tegeliku maksumuse protsendi planeeritust.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-badge">5</div>
+        <div class="step-body">
+          <h3>Seadista graafilised indikaatorid (valikuline)</h3>
+          <p>Vajuta <strong>Graphical Indicators</strong>, et kuvada välja väärtuste asemel värvilisi ikoone. Näiteks: roheline = OK, kollane = hoiatus, punane = probleem. See teeb projekti oleku ülevaate palju kiiremaks.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-badge">6</div>
+        <div class="step-body">
+          <h3>Lisa väli Gantt-diagrammi tabelisse</h3>
+          <p>Paremklõpsa veeru päisel Gantt-vaates, vali <strong>Insert Column</strong> ja otsi oma kohandatud välja nimi. Nüüd on arvutustulemused nähtavad igas ülesande reas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMULA EXAMPLES -->
+  <section id="valemid" class="formula-section">
+    <div class="sec-header">
+      <span class="sec-num">03</span>
+      <h2 class="sec-title">Valemite näited</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="formula-box">
+      <h3>Kasulikud valemid MS Projectis</h3>
+      <div class="formula-examples">
+        <div class="formula-card">
+          <h4>Eelarve ületamine (%)</h4>
+          <div class="formula-code">([Actual Cost] / [Baseline Cost]) * 100</div>
+          <p class="formula-desc">Näitab, mitu protsenti planeeritud eelarvest on kulutatud.</p>
+        </div>
+        <div class="formula-card">
+          <h4>Hilinemise päevad</h4>
+          <div class="formula-code">DateDiff("d", [Baseline Finish], [Finish])</div>
+          <p class="formula-desc">Arvutab, mitu päeva erineb tegelik lõppkuupäev planeeritust.</p>
+        </div>
+        <div class="formula-card">
+          <h4>Staatuse tekst</h4>
+          <div class="formula-code">IIf([% Complete]=100,"Valmis",IIf([% Complete]>0,"Töös","Alustamata"))</div>
+          <p class="formula-desc">Kuvab teksti vastavalt ülesande valmisoleku protsendile.</p>
+        </div>
+        <div class="formula-card">
+          <h4>Jääk eelarvest</h4>
+          <div class="formula-code">[Baseline Cost] - [Actual Cost]</div>
+          <p class="formula-desc">Näitab, kui palju eelarvet on veel kasutada jäänud.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="pildid" class="gallery-section">
+    <div class="sec-header">
+      <span class="sec-num">04</span>
+      <h2 class="sec-title">Ekraanipildid</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="gallery-grid">
+      <figure class="gallery-item">
+        <img src="images/func/Step2_CAV.png" alt="Custom Fields aken" class="gallery-img" onclick="openModal(this)">
+        <figcaption class="gallery-caption"><strong>Pilt 1.</strong> Custom Fields akna avamine.</figcaption>
+      </figure>
+      <figure class="gallery-item">
+        <img src="images/func/Step3_CAV.png" alt="Valemi sisestamine" class="gallery-img" onclick="openModal(this)">
+        <figcaption class="gallery-caption"><strong>Pilt 2.</strong> Custom Fields seadistamine.</figcaption>
+      </figure>
+      <figure class="gallery-item">
+        <img src="images/func/Step4_CAV.png" alt="Graafilised indikaatorid" class="gallery-img" onclick="openModal(this)">
+        <figcaption class="gallery-caption"><strong>Pilt 3.</strong> Formula seadistamine.</figcaption>
+      </figure>
+      <figure class="gallery-item">
+        <img src="images/func/Step5_CAV.png" alt="Tulemus Gantt tabelis" class="gallery-img" onclick="openModal(this)">
+        <figcaption class="gallery-caption"><strong>Pilt 4.</strong> Arvutusväli Gantt-diagrammi tabelis.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- INFO -->
+  <div class="info-wide">
+    <h2>Miks arvutusväljad on kasulikud?</h2>
+    <p>Arvutusväljad säästävad aega ja vähendavad vigade riski. Selle asemel, et käsitsi arvutada iga ülesande staatust või eelarve täitmist, teeb MS Project seda automaatselt iga kord, kui andmed muutuvad.</p>
+    <p>Koos graafiliste indikaatoritega saab projektijuht ühe pilguga näha, millised ülesanded on probleemis — punane ikoon tähendab kohe, et midagi vajab tähelepanu.</p>
+    <div class="tip-box">
+      <strong>💡 Vihje:</strong> Salvesta valemi koos projektimalliga, et sama arvutusvälja saaks kasutada ka tulevastes projektides ilma uuesti seadistamata.
+    </div>
+  </div>
+
+  <!-- VIDEO -->
+  <section class="video-section">
+    <div class="sec-header">
+      <span class="sec-num">05</span>
+      <h2 class="sec-title">Videoõpetus</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="video-card">
+      <div>
+        <h2>Arvutusvälja lisamine — videoõpetus</h2>
+        <p>Vaata YouTube'i videoõpetust, kus näidatakse samm-sammult, kuidas lisada arvutusvälju ja valemeid Microsoft Projectis.</p>
+        <a href="https://www.youtube.com/watch?v=bP1Wi4wGlaw&t=367s" target="_blank" class="video-btn">
+          ▶ Vaata videot
+        </a>
+      </div>
+      <div class="video-thumb">
+        <div class="play-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>Koostatud Microsoft Projecti õppeülesande jaoks.</p>
+  <span class="footer-badge">Arvutusväljad</span>
+</footer>
+
+<div id="imgModal" class="modal">
+  <span class="modal-close" onclick="closeModal()">&times;</span>
+  <img class="modal-content" id="modalImg">
+</div>
+
+<script>
+function openModal(img) {
+  document.getElementById("imgModal").style.display = "flex";
+  document.getElementById("modalImg").src = img.src;
+}
+function closeModal() {
+  document.getElementById("imgModal").style.display = "none";
+}
+document.getElementById("imgModal").addEventListener("click", function(e) { if (e.target === this) closeModal(); });
+document.addEventListener("keydown", function(e) { if (e.key === "Escape") closeModal(); });
+</script>
+</body>
+</html>

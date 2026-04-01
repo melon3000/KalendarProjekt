@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Microsoft Project — Diagrammide Loomine</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0a0f1e;
+      --paper: #f5f0e8;
+      --accent: #059669;
+      --accent2: #0057ff;
+      --gold: #c9a84c;
+      --muted: #7a7567;
+      --card-bg: #ffffff;
+      --border: rgba(10,15,30,0.12);
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background-color: var(--paper); color: var(--ink); overflow-x: hidden; }
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 9999; opacity: .35;
+    }
+
+    /* HERO */
+    .hero { min-height: 100vh; display: grid; grid-template-rows: 1fr auto; position: relative; overflow: hidden; padding: 0 clamp(24px, 6vw, 100px); }
+    .hero-bg { position: absolute; inset: 0; background: var(--ink); z-index: 0; }
+    .hero-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 110% 20%, rgba(5,150,105,0.4) 0%, transparent 60%),
+                  radial-gradient(ellipse 50% 70% at -10% 80%, rgba(0,87,255,0.2) 0%, transparent 55%);
+    }
+    .hero-grid-lines {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 80px 80px; animation: gridShift 20s linear infinite;
+    }
+    @keyframes gridShift { from { transform: translateY(0); } to { transform: translateY(80px); } }
+    .hero-content { position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; padding: 120px 0 60px; max-width: 1100px; margin: 0 auto; width: 100%; }
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: 10px; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 32px; opacity: 0; animation: fadeUp 0.8s 0.2s ease forwards; }
+    .hero-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--gold); }
+    .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(3rem, 8vw, 7rem); font-weight: 800; line-height: 0.95; color: #fff; letter-spacing: -0.03em; margin-bottom: 36px; opacity: 0; animation: fadeUp 0.9s 0.35s ease forwards; }
+    .hero h1 em { font-style: normal; color: #6ee7b7; }
+    .hero-sub { max-width: 560px; font-size: 1.1rem; font-weight: 300; color: rgba(255,255,255,0.65); line-height: 1.7; opacity: 0; animation: fadeUp 0.9s 0.5s ease forwards; }
+    .hero-scroll { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; width: 100%; padding: 32px 0; display: flex; align-items: center; gap: 12px; color: rgba(255,255,255,0.35); font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0; animation: fadeUp 0.9s 0.9s ease forwards; }
+    .scroll-line { width: 40px; height: 1px; background: rgba(255,255,255,0.25); position: relative; overflow: hidden; }
+    .scroll-line::after { content: ''; position: absolute; left: -100%; top: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.6); animation: scrollPulse 2s 1.5s ease infinite; }
+    @keyframes scrollPulse { 0% { left: -100%; } 100% { left: 100%; } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* NAV */
+    .nav { position: sticky; top: 0; z-index: 800; background: rgba(245,240,232,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 clamp(24px, 6vw, 100px); display: flex; align-items: center; justify-content: space-between; height: 60px; }
+    .nav-brand { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem; letter-spacing: 0.04em; color: var(--ink); text-decoration: none; }
+    .nav-brand span { color: var(--accent); }
+    .nav-links { display: flex; gap: 4px; }
+    .nav-links a { text-decoration: none; color: var(--muted); font-size: 0.82rem; font-weight: 500; padding: 6px 14px; border-radius: 100px; transition: all 0.2s ease; }
+    .nav-links a:hover { color: var(--ink); background: rgba(10,15,30,0.06); }
+
+    /* PAGE TABS */
+    .page-tabs { background: var(--ink); padding: 0 clamp(24px, 6vw, 100px); }
+    .page-tabs-inner { max-width: 1200px; margin: 0 auto; display: flex; gap: 0; }
+    .page-tab { text-decoration: none; color: rgba(255,255,255,0.5); font-size: 0.82rem; font-weight: 500; padding: 14px 20px; border-bottom: 2px solid transparent; transition: all 0.2s ease; white-space: nowrap; }
+    .page-tab:hover { color: rgba(255,255,255,0.85); }
+    .page-tab.active { color: #fff; border-bottom-color: #6ee7b7; }
+
+    /* MAIN */
+    .main-wrap { max-width: 1200px; margin: 0 auto; padding: 80px clamp(24px, 6vw, 100px); }
+    .sec-header { display: flex; align-items: baseline; gap: 16px; margin-bottom: 48px; }
+    .sec-num { font-family: 'Syne', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; color: var(--accent); text-transform: uppercase; }
+    .sec-title { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700; color: var(--ink); letter-spacing: -0.03em; line-height: 1.1; }
+    .sec-line { flex: 1; height: 1px; background: var(--border); }
+
+    /* INTRO */
+    .intro-block { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; margin-bottom: 100px; }
+    .intro-cell { background: var(--card-bg); padding: 48px; }
+    .intro-cell:first-child { border-right: 1px solid var(--border); }
+    .intro-cell h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; }
+    .intro-cell p { font-size: 1.05rem; line-height: 1.75; color: #3a3a3a; }
+    .intro-big { font-family: 'Syne', sans-serif; font-size: clamp(2.4rem, 5vw, 4.2rem); font-weight: 800; color: var(--ink); line-height: 1.05; letter-spacing: -0.04em; }
+    .intro-big em { font-style: normal; color: var(--accent); }
+
+    /* DIAGRAM TYPES */
+    .types-section { margin-bottom: 100px; }
+    .types-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .type-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 36px; transition: transform 0.3s ease, box-shadow 0.3s ease; position: relative; overflow: hidden; }
+    .type-card:hover { transform: translateY(-4px); box-shadow: 0 20px 60px rgba(10,15,30,0.1); }
+    .type-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; opacity: 0; transition: opacity 0.3s; }
+    .type-card:hover::before { opacity: 1; }
+    .type-card:nth-child(1)::before { background: linear-gradient(90deg, #059669, #6ee7b7); }
+    .type-card:nth-child(2)::before { background: linear-gradient(90deg, #0057ff, #818cf8); }
+    .type-card:nth-child(3)::before { background: linear-gradient(90deg, #e8400c, #f59e0b); }
+    .type-card:nth-child(4)::before { background: linear-gradient(90deg, #7c3aed, #c084fc); }
+    .type-card:nth-child(5)::before { background: linear-gradient(90deg, #0891b2, #67e8f9); }
+    .type-card:nth-child(6)::before { background: linear-gradient(90deg, #be185d, #f9a8d4); }
+    .type-icon { font-size: 2.4rem; margin-bottom: 16px; display: block; }
+    .type-card h3 { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--ink); margin-bottom: 10px; }
+    .type-card p { font-size: 0.9rem; line-height: 1.65; color: #525252; }
+
+    /* STEPS */
+    .steps-section { margin-bottom: 100px; }
+    .steps-list { display: flex; flex-direction: column; gap: 20px; }
+    .step-row { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 36px 40px; display: grid; grid-template-columns: 56px 1fr; gap: 32px; align-items: start; position: relative; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .step-row:hover { transform: translateY(-3px); box-shadow: 0 16px 48px rgba(10,15,30,0.09); }
+    .step-row::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent), var(--accent2)); opacity: 0; transition: opacity 0.3s; }
+    .step-row:hover::before { opacity: 1; }
+    .step-badge { width: 56px; height: 56px; border-radius: 16px; background: var(--ink); color: white; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .step-body h3 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--ink); margin-bottom: 10px; }
+    .step-body p { font-size: 0.96rem; line-height: 1.75; color: #525252; }
+    .step-body strong { color: var(--ink); font-weight: 600; }
+
+    /* GALLERY */
+    .gallery-section { margin-bottom: 100px; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
+    .gallery-item { border-radius: 16px; overflow: hidden; border: 1px solid var(--border); }
+    .gallery-item:nth-child(1) { grid-column: span 6; }
+    .gallery-item:nth-child(2) { grid-column: span 6; }
+    .gallery-item:nth-child(3) { grid-column: span 4; }
+    .gallery-item:nth-child(4) { grid-column: span 4; }
+    .gallery-item:nth-child(5) { grid-column: span 4; }
+    .gallery-img { width: 100%; height: 240px; object-fit: cover; display: block; cursor: zoom-in; background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); }
+    .gallery-caption { padding: 16px 20px; font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--border); background: var(--card-bg); }
+    .gallery-caption strong { color: var(--ink); font-weight: 600; }
+
+    /* TIPS */
+    .tips-section { margin-bottom: 100px; }
+    .tips-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .tip-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 36px; }
+    .tip-card h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 14px; }
+    .tip-card p { font-size: 0.92rem; line-height: 1.7; color: #525252; }
+    .tip-card .tag { display: inline-block; padding: 4px 12px; border-radius: 100px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em; margin-bottom: 14px; }
+    .tag-green { background: #d1fae5; color: #065f46; }
+    .tag-blue { background: #dbeafe; color: #1e40af; }
+    .tag-orange { background: #ffedd5; color: #9a3412; }
+    .tag-purple { background: #ede9fe; color: #5b21b6; }
+
+    /* VIDEO */
+    .video-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 48px; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 40px; margin-bottom: 80px; }
+    .video-card h2 { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 700; color: var(--ink); margin-bottom: 12px; }
+    .video-card p { font-size: 0.95rem; color: #525252; line-height: 1.65; max-width: 520px; }
+    .video-btn { display: inline-flex; align-items: center; gap: 10px; margin-top: 24px; padding: 14px 28px; background: var(--accent); color: white; text-decoration: none; border-radius: 100px; font-weight: 600; font-size: 0.9rem; transition: opacity 0.2s; }
+    .video-btn:hover { opacity: 0.85; }
+    .video-thumb { width: 200px; height: 120px; border-radius: 14px; background: linear-gradient(135deg, #1a1a2e, #16213e); display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid var(--border); }
+    .play-icon { width: 48px; height: 48px; background: rgba(255,255,255,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+
+    /* MODAL */
+    .modal { display: none; position: fixed; z-index: 99999; inset: 0; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; }
+    .modal-content { max-width: 90%; max-height: 90%; border-radius: 12px; animation: zoomIn 0.3s ease; }
+    .modal-close { position: absolute; top: 30px; right: 40px; font-size: 40px; color: white; cursor: pointer; }
+    @keyframes zoomIn { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border); padding: 32px clamp(24px, 6vw, 100px); display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; }
+    footer p { font-size: 0.82rem; color: var(--muted); }
+    .footer-badge { font-family: 'Syne', sans-serif; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); padding: 6px 14px; border: 1px solid rgba(5,150,105,0.3); border-radius: 100px; }
+
+    @media (max-width: 900px) {
+      .intro-block { grid-template-columns: 1fr; }
+      .intro-cell:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+      .types-grid { grid-template-columns: 1fr 1fr; }
+      .tips-grid { grid-template-columns: 1fr; }
+      .video-card { grid-template-columns: 1fr; }
+      .video-thumb { display: none; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-item { grid-column: span 1 !important; }
+      .nav-links { display: none; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+    }
+    @media (max-width: 520px) {
+      .types-grid { grid-template-columns: 1fr; }
+      .step-row { grid-template-columns: 1fr; }
+      .intro-cell { padding: 30px 24px; }
+      .page-tabs-inner { overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"><div class="hero-grid-lines"></div></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Microsoft Project · Diagrammid</p>
+    <h1>Diagrammide<br><em>loomine</em><br>Projectis</h1>
+    <p class="hero-sub">Õpi kasutama Gantt-diagrammi, ressursigraafikuid ja muid visuaalseid tööriistu projekti jälgimiseks ja analüüsimiseks.</p>
+  </div>
+  <div class="hero-scroll"><div class="scroll-line"></div>Keri alla</div>
+</section>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">MS Project <span>·</span> Juhend</a>
+    <div class="nav-links">
+      <a href="#tyybid">Diagrammi tüübid</a>
+      <a href="#sammud">Sammud</a>
+      <a href="#pildid">Pildid</a>
+      <a href="#naited">Näpunäited</a>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE TABS -->
+<div class="page-tabs">
+  <div class="page-tabs-inner">
+    <a href="index.html" class="page-tab">📅 Uue kalendri loomine</a>
+    <a href="valem.html" class="page-tab">🧮 Arvutusvälja lisamine</a>
+    <a href="diagramm.html" class="page-tab active">📊 Diagrammide loomine</a>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main class="main-wrap">
+
+  <!-- INTRO -->
+  <section id="sissejuhatus" style="margin-bottom:100px;">
+    <div class="sec-header">
+      <span class="sec-num">01</span>
+      <h2 class="sec-title">Miks diagrammid?</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="intro-block">
+      <div class="intro-cell">
+        <p class="intro-big">Näe projekti<br><em>visuaalselt</em></p>
+      </div>
+      <div class="intro-cell">
+        <h3>Diagrammide eelised</h3>
+        <p>Microsoft Project pakub mitmeid visuaalseid vaateid, mis aitavad projekti ülevaatlikult esitada. Diagrammid teevad keerulise ajakava kergesti mõistetavaks.</p>
+        <p style="margin-top:16px;">Gantt-diagramm on enamiku projektijuhtide peamine tööriist — see näitab ülesandeid ajajoonel, sõltuvusi ning ülesannete täitmise edenemist.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TYPES -->
+  <section id="tyybid" class="types-section">
+    <div class="sec-header">
+      <span class="sec-num">02</span>
+      <h2 class="sec-title">Diagrammide tüübid</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="types-grid">
+      <div class="type-card">
+        <span class="type-icon">📊</span>
+        <h3>Gantt Chart</h3>
+        <p>Peamine vaade MS Projectis. Näitab ülesandeid horisontaalse ribana ajajoonel. Sobib kõige paremini ülevaate saamiseks.</p>
+      </div>
+      <div class="type-card">
+        <span class="type-icon">🔗</span>
+        <h3>Network Diagram</h3>
+        <p>Näitab ülesandeid kastidena ja nende vahelisi seoseid nooltena. Kasulik kriitilise tee analüüsiks.</p>
+      </div>
+      <div class="type-card">
+        <span class="type-icon">📅</span>
+        <h3>Calendar View</h3>
+        <p>Kuvab ülesanded traditsioonilises kalendrivormingus. Sobib lühiajalise planeerimise jaoks.</p>
+      </div>
+      <div class="type-card">
+        <span class="type-icon">👥</span>
+        <h3>Resource Graph</h3>
+        <p>Näitab ressursside koormust graafikuna. Aitab tuvastada ülekoormust ja vabade ressursside aegu.</p>
+      </div>
+      <div class="type-card">
+        <span class="type-icon">📋</span>
+        <h3>Task Usage</h3>
+        <p>Kuvab iga ülesande jaoks ressursside kasutust aja lõikes. Üksikasjalik koormuse analüüs.</p>
+      </div>
+      <div class="type-card">
+        <span class="type-icon">📈</span>
+        <h3>Resource Usage</h3>
+        <p>Näitab ressursi tööülesandeid aja lõikes. Hea ülevaade, millega iga inimene tegeleb.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEPS -->
+  <section id="sammud" class="steps-section">
+    <div class="sec-header">
+      <span class="sec-num">03</span>
+      <h2 class="sec-title">Gantt-diagrammi kohandamine</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="steps-list">
+      <div class="step-row">
+        <div class="step-badge">1</div>
+        <div class="step-body">
+          <h3>Ava soovitud vaade</h3>
+          <p>Klõpsa vahekaardil <strong>View</strong> ja vali oma vaate tüüp: <strong>Gantt Chart</strong>, <strong>Network Diagram</strong>, <strong>Calendar</strong> jne. Kõige olulisem on Gantt-vaade.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-badge">2</div>
+        <div class="step-body">
+          <h3>Kohanda Gantt-riba stiili</h3>
+          <p>Menüü <strong>Format</strong> alt saad muuta Gantt-ribade värve, kujusid ja silte. Vali <strong>Bar Styles</strong>, et iga ülesande tüübi (kriitilised, koondülesanded, vaheülesanded) jaoks eraldi kujundus määrata.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-badge">3</div>
+        <div class="step-body">
+          <h3>Lisa või eemalda veerge</h3>
+          <p>Paremklõpsa veeru päisel ja vali <strong>Insert Column</strong>. Lisa vajalikud veerud nagu Duration, Start, Finish, % Complete, Resource Names. Eemaldamiseks paremklõpsa veeru päisel ja vali <strong>Hide Column</strong>.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-badge">4</div>
+        <div class="step-body">
+          <h3>Muuda ajaskaala</h3>
+          <p>Topeltklõpsa Gantt-diagrammi ülaosas ajaskaalal. Avaneb aken, kus saad muuta ajaühikuid: nädalad, kuud, kvartalid. Saad määrata kuni kolm ajatasandit.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-badge">5</div>
+        <div class="step-body">
+          <h3>Kuva kriitilise tee</h3>
+          <p>Vahekaardil <strong>Format</strong> märgi ruut <strong>Critical Tasks</strong>. Kriitilise teega ülesanded muutuvad punaseks — need on ülesanded, mille hilinemine pikendab tervet projekti.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-badge">6</div>
+        <div class="step-body">
+          <h3>Prindi või ekspordi diagramm</h3>
+          <p>Vali <strong>File → Print</strong> ja konfigureeri lehekülje paigutus. Gantt-diagrammi saab eksportida ka PDF-formaati, et jagada meeskonnaliikmetega, kellel pole MS Projecti.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="pildid" class="gallery-section">
+    <div class="sec-header">
+      <span class="sec-num">04</span>
+      <h2 class="sec-title">Ekraanipildid</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="gallery-grid">
+      <figure class="gallery-item">
+        <img src="images/diag/gant.png" alt="Gantt diagramm" class="gallery-img" onclick="openModal(this)">
+        <figcaption class="gallery-caption"><strong>Pilt 1.</strong> Gantt-diagramm ülesannetega.</figcaption>
+      </figure>
+      <figure class="gallery-item">
+        <img src="images/diag/kalender.png" alt="Kalender diagramm" class="gallery-img" onclick="openModal(this)">
+        <figcaption class="gallery-caption"><strong>Pilt 2.</strong> Kalender Diagram.</figcaption>
+      </figure>
+      <figure class="gallery-item">
+        <img src="images/diag/bar.png" alt="Bar Styles" class="gallery-img" onclick="openModal(this)">
+        <figcaption class="gallery-caption"><strong>Pilt 3.</strong> Gantt-ribade stiilide muutmine.</figcaption>
+      </figure>
+      <figure class="gallery-item">
+        <img src="images/diag/crit.png" alt="Kriitiline tee" class="gallery-img" onclick="openModal(this)">
+        <figcaption class="gallery-caption"><strong>Pilt 4.</strong> Kriitilise tee kuvamine.</figcaption>
+      </figure>
+      <figure class="gallery-item">
+        <img src="images/diag/resource_diag.png" alt="Ressursigraafik" class="gallery-img" onclick="openModal(this)">
+        <figcaption class="gallery-caption"><strong>Pilt 5.</strong> Ressursigraafik.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- TIPS -->
+  <section id="naited" class="tips-section">
+    <div class="sec-header">
+      <span class="sec-num">05</span>
+      <h2 class="sec-title">Näpunäited</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="tips-grid">
+      <div class="tip-card">
+        <span class="tag tag-green">Aeg</span>
+        <h3>Kasuta ajaskaala suurendust</h3>
+        <p>Scroll'i diagrammi ajaskaalal hoides Ctrl-klahvi ja kasutades hiire kerimisratast. Kiiresti saad vahetada päeva- ja kuuvaate vahel.</p>
+      </div>
+      <div class="tip-card">
+        <span class="tag tag-blue">Vaated</span>
+        <h3>Salvesta kohandatud vaated</h3>
+        <p>Menüüs View → Other Views → More Views saad salvestada oma kohandatud vaateid ja kiiresti nende vahel lülituda.</p>
+      </div>
+      <div class="tip-card">
+        <span class="tag tag-orange">Kriitika</span>
+        <h3>Jälgi kriitilist teed pidevalt</h3>
+        <p>Kriitiliste ülesannete kuvamine aitab kohe näha, millised ülesanded mõjutavad projekti lõppkuupäeva. Hoia neid alati silme ees.</p>
+      </div>
+      <div class="tip-card">
+        <span class="tag tag-purple">Eksport</span>
+        <h3>Kopeeri diagramm Wordi / PowerPointi</h3>
+        <p>Menüüs Task → Copy → Copy Picture saad teha Gantt-diagrammist pildi ja kleepida selle otse esitluse slaidi.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEO -->
+  <div class="sec-header">
+    <span class="sec-num">06</span>
+    <h2 class="sec-title">Videoõpetus</h2>
+    <div class="sec-line"></div>
+  </div>
+  <div class="video-card">
+    <div>
+      <h2>Diagrammide loomine — videoõpetus</h2>
+      <p>Vaata YouTube'i videoõpetust, kus näidatakse samm-sammult, kuidas luua ja kohandada diagramme Microsoft Projectis.</p>
+      <a href="https://www.youtube.com/watch?v=iTpoBlkR0OE" target="_blank" class="video-btn">
+        ▶ Vaata videot
+      </a>
+    </div>
+    <div class="video-thumb">
+      <div class="play-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p>Koostatud Microsoft Projecti õppeülesande jaoks.</p>
+  <span class="footer-badge">Diagrammid</span>
+</footer>
+
+<div id="imgModal" class="modal">
+  <span class="modal-close" onclick="closeModal()">&times;</span>
+  <img class="modal-content" id="modalImg">
+</div>
+
+<script>
+function openModal(img) {
+  document.getElementById("imgModal").style.display = "flex";
+  document.getElementById("modalImg").src = img.src;
+}
+function closeModal() {
+  document.getElementById("imgModal").style.display = "none";
+}
+document.getElementById("imgModal").addEventListener("click", function(e) { if (e.target === this) closeModal(); });
+document.addEventListener("keydown", function(e) { if (e.key === "Escape") closeModal(); });
+</script>
+</body>
+</html>
