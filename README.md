@@ -28,31 +28,6 @@ Interaktiivne **kolmeleheline** veebijuhend Microsoft Projecti põhifunktsioonid
 
 ---
 
-## 🗂 Projekti struktuur
-
-```
-📦 ms-project-juhend
- ┣ 📄 index.html            ← Kalendri loomise juhend
- ┣ 📄 valem.html            ← Arvutusvälja juhend
- ┣ 📄 diagramm.html         ← Diagrammide juhend
- ┗ 📂 Project
-    ┗ 📂 images
-       ┣ 📂 calender
-       ┃  ┣ 🖼️  step1.png    Change Working Time avamine
-       ┃  ┣ 🖼️  step2.png    Uue kalendri loomine
-       ┃  ┣ 🖼️  step3.png    Tööaegade muutmine
-       ┃  ┣ 🖼️  step4.png    Erandite lisamine
-       ┃  ┗ 🖼️  step5.png    Kalendri kasutamine
-       ┗ 📂 diag
-          ┣ 🖼️  gant.png          Gantt-diagramm
-          ┣ 🖼️  kalender.png      Kalender-diagramm
-          ┣ 🖼️  bar.png           Bar Styles seaded
-          ┣ 🖼️  crit.png          Kriitilise tee kuvamine
-          ┗ 🖼️  resource_diag.png Ressursigraafik
-```
-
----
-
 ## 🚀 Alustamine
 
 ```bash
