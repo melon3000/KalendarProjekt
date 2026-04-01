@@ -1,4 +1,3 @@
-```md
 <div align="center">
 
 ![header](https://capsule-render.vercel.app/api?type=waving&color=0:e8400c,100:c9a84c&height=200&section=header&text=MS+Project&fontSize=60&fontColor=ffffff&fontAlignY=38&desc=Kalender+·+Arvutusväli+·+Diagrammid&descAlignY=58&descSize=18&descColor=f0f6fc&animation=fadeIn)
@@ -175,4 +174,3 @@ Projekt näitab, kuidas veebilahenduse abil saab selgitada keerulist tarkvara li
 [![GitHub](https://img.shields.io/badge/GitHub-melon3000-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/melon3000)
 
 </div>
-```
