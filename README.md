@@ -1,16 +1,16 @@
 <div align="center">
 
-![header](https://capsule-render.vercel.app/api?type=waving&color=0:1f6feb,100:388bfd&height=200&section=header&text=ProjectLibre&fontSize=60&fontColor=ffffff&fontAlignY=38&desc=Interaktiivne+projektijuhtimise+veebijuhend&descAlignY=58&descSize=18&descColor=c9d1d9&animation=fadeIn)
+![header](https://capsule-render.vercel.app/api?type=waving&color=0:e8400c,100:c9a84c&height=200&section=header&text=MS+Project&fontSize=60&fontColor=ffffff&fontAlignY=38&desc=Kalender+·+Arvutusväli+·+Diagrammid&descAlignY=58&descSize=18&descColor=f0f6fc&animation=fadeIn)
 
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=16&pause=1000&color=58A6FF&center=true&vCenter=true&width=500&lines=📅+Kalendri+loomine+ProjectLibre'is;📊+Gantti+diagramm+ja+ressursigraafik;🌐+Puhas+HTML+%2F+CSS+%2F+JavaScript)](https://git.io/typing-svg)
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=16&pause=1000&color=FF7B72&center=true&vCenter=true&width=540&lines=📅+Uue+kalendri+loomine;🧮+Arvutusvälja+lisamine;📊+Gantti+diagramm+ja+ressursigraafik)](https://git.io/typing-svg)
 
 ---
 
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Pages](https://img.shields.io/badge/Lehti-3-blueviolet?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-2ea44f?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge)
 
 </div>
 
@@ -18,34 +18,37 @@
 
 ## 📖 Ülevaade
 
-**ProjectLibre** on tasuta avatud lähtekoodiga alternatiiv Microsoft Projectile. See interaktiivne veebijuhend katab kahte põhiteemat:
+Interaktiivne **kolmeleheline** veebijuhend Microsoft Projecti põhifunktsioonide kohta. Iga teema on eraldi lehel koos samm-sammulise juhendi ja ekraanipiltidega.
 
-- 📅 **Kalendrid** — tööaja, pühade ja vabade päevade haldamine
-- 📊 **Diagrammid** — Gantti diagramm ja ressursigraafik
-
-> Juhend töötab puhta HTML/CSS/JS-ga, ühtegi raamistikku pole vaja.
+| Leht | Teema | Sammude arv |
+|------|-------|:-----------:|
+| `index.html` | 📅 Uue kalendri loomine | 6 |
+| `valem.html` | 🧮 Arvutusvälja lisamine | — |
+| `diagramm.html` | 📊 Diagrammide loomine | 6 |
 
 ---
 
 ## 🗂 Projekti struktuur
 
 ```
-📦 projectlibre-juhend
- ┣ 📄 kalender.html         ← Kalendri loomise juhend (6 sammu)
- ┣ 📄 diagrammid.html       ← Diagrammide juhend (4 sammu)
- ┗ 📂 images
-    ┣ 📂 kalender
-    ┃  ┣ 🖼️  step1.png       Resource → Calendar avamine
-    ┃  ┣ 🖼️  step2.png       Kalendri menüü ja seaded
-    ┃  ┣ 🖼️  step3.png       TestKalendri loomine
-    ┃  ┣ 🖼️  step4.png       Päevade ja tööaja seadistamine
-    ┃  ┣ 🖼️  step5.png       Advanced → Task Calendar
-    ┃  ┗ 🖼️  step6.png       Kalendriikoon projekti peal
-    ┗ 📂 diagrammid
-       ┣ 🖼️  step1.png       Task → Gantt avamine
-       ┣ 🖼️  step2.png       Gantti diagramm ülesannetega
-       ┣ 🖼️  step3.png       Views → Resource Usage avamine
-       ┗ 🖼️  step4.png       Resource Usage diagramm
+📦 ms-project-juhend
+ ┣ 📄 index.html            ← Kalendri loomise juhend
+ ┣ 📄 valem.html            ← Arvutusvälja juhend
+ ┣ 📄 diagramm.html         ← Diagrammide juhend
+ ┗ 📂 Project
+    ┗ 📂 images
+       ┣ 📂 calender
+       ┃  ┣ 🖼️  step1.png    Change Working Time avamine
+       ┃  ┣ 🖼️  step2.png    Uue kalendri loomine
+       ┃  ┣ 🖼️  step3.png    Tööaegade muutmine
+       ┃  ┣ 🖼️  step4.png    Erandite lisamine
+       ┃  ┗ 🖼️  step5.png    Kalendri kasutamine
+       ┗ 📂 diag
+          ┣ 🖼️  gant.png          Gantt-diagramm
+          ┣ 🖼️  kalender.png      Kalender-diagramm
+          ┣ 🖼️  bar.png           Bar Styles seaded
+          ┣ 🖼️  crit.png          Kriitilise tee kuvamine
+          ┗ 🖼️  resource_diag.png Ressursigraafik
 ```
 
 ---
@@ -54,18 +57,18 @@
 
 ```bash
 # 1. Klooni repositoorium
-git clone https://github.com/melon3000/projectlibre-juhend.git
+git clone https://github.com/melon3000/ms-project-juhend.git
 
 # 2. Mine kausta
-cd projectlibre-juhend
+cd ms-project-juhend
 
 # 3. Ava brauseris
-open kalender.html         # macOS
-start kalender.html        # Windows
-xdg-open kalender.html     # Linux
+open index.html         # macOS
+start index.html        # Windows
+xdg-open index.html     # Linux
 ```
 
-> **Nõuded:** Kaasaegne brauser (Chrome, Firefox, Safari, Edge). Serverit pole vaja.
+> **Nõuded:** Kaasaegne brauser. Serverit pole vaja.
 
 ---
 
@@ -75,32 +78,38 @@ xdg-open kalender.html     # Linux
 <tr>
 <td width="50%">
 
-### 📅 `kalender.html`
+### 📅 `index.html` — Kalender
 
 | # | Samm |
 |---|------|
-| 1 | Resource → Calendar avamine |
-| 2 | Kalendri menüü ja seaded |
-| 3 | Uue TestKalendri loomine |
-| 4 | Tööpäevade seadistamine |
-| 5 | Task Calendar rakendamine |
-| 6 | Tulemuse kontrollimine |
+| 1 | Microsoft Projecti avamine |
+| 2 | Change Working Time aken |
+| 3 | Uue kalendri loomine |
+| 4 | Tööpäevade ja -aegade muutmine |
+| 5 | Eripäevade ja pühade lisamine |
+| 6 | Kalendri rakendamine projektile |
 
 </td>
 <td width="50%">
 
-### 📊 `diagrammid.html`
+### 📊 `diagramm.html` — Diagrammid
 
 | # | Samm |
 |---|------|
-| 1 | Task → Gantt avamine |
-| 2 | Gantti diagramm ja ajakava |
-| 3 | Views → Resource Usage |
-| 4 | Ressursid ja tööaeg |
+| 1 | Gantti diagrammi avamine |
+| 2 | Ülesannete lisamine |
+| 3 | Ajaskaala kohandamine |
+| 4 | Bar Styles muutmine |
+| 5 | Kriitilise tee kuvamine |
+| 6 | Printimine ja eksport |
 
 </td>
 </tr>
 </table>
+
+### 🧮 `valem.html` — Arvutusväli
+
+Juhend kohandatud arvutusvälja loomiseks MS Projectis — valemite sisestamine, väljade kuvamine ja tulemuste analüüs.
 
 ---
 
@@ -109,11 +118,17 @@ xdg-open kalender.html     # Linux
 | Funktsioon | Kirjeldus |
 |---|---|
 | 📌 Kleepuv navigatsioon | Jääb lehe ülaossa kerimise ajal |
+| 🗂 3 vaheleht | Kalender / Arvutusväli / Diagrammid |
 | 🔍 Piltide modal | Klõpsa pildil suurendamiseks |
 | ⌨️ `Esc` klahv | Sulgeb modali |
 | 🎬 Hero animatsioon | Sissefade + liikuv ruudustik |
 | 📱 Reageeriv kujundus | Töötab mobiilis ja lauaarvutis |
-| 🗂 Vahelehtede nav | Lihtne liikumine lehtede vahel |
+
+---
+
+## ⚠️ Oluline teada
+
+> **Vale kalender = valed tähtajad.** Kontrolli alati, et õige kalender oleks projektile rakendatud — `Project Information → Calendar`. Ilma selleta ei vasta projektiplaan tegelikule töökorraldusele.
 
 ---
 
@@ -128,23 +143,11 @@ xdg-open kalender.html     # Linux
 
 ---
 
-## 📊 GitHub statistika
-
 <div align="center">
 
-![GitHub repo size](https://img.shields.io/github/repo-size/melon3000/projectlibre-juhend?style=flat-square&color=1f6feb&label=Repo+suurus)
-![GitHub last commit](https://img.shields.io/github/last-commit/melon3000/projectlibre-juhend?style=flat-square&color=238636&label=Viimane+commit)
-![GitHub stars](https://img.shields.io/github/stars/melon3000/projectlibre-juhend?style=flat-square&color=e3b341&label=Tähed)
+![footer](https://capsule-render.vercel.app/api?type=waving&color=0:c9a84c,100:e8400c&height=100&section=footer)
 
-</div>
-
----
-
-<div align="center">
-
-![footer](https://capsule-render.vercel.app/api?type=waving&color=0:388bfd,100:1f6feb&height=100&section=footer)
-
-**melon3000** · Koostatud ProjectLibre õppeülesande jaoks
+**melon3000** · Koostatud Microsoft Projecti õppeülesande jaoks
 
 [![GitHub](https://img.shields.io/badge/GitHub-melon3000-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/melon3000)
 
