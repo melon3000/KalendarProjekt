@@ -23,7 +23,7 @@ Interaktiivne **kolmeleheline** veebijuhend Microsoft Projecti põhifunktsioonid
 | Leht | Teema | Sammude arv |
 |------|-------|:-----------:|
 | `index.html` | 📅 Uue kalendri loomine | 6 |
-| `valem.html` | 🧮 Arvutusvälja lisamine | — |
+| `valem.html` | 🧮 Arvutusvälja lisamine | 6 |
 | `diagramm.html` | 📊 Diagrammide loomine | 6 |
 
 ---
