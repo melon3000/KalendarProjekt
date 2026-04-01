@@ -28,25 +28,6 @@ Interaktiivne **kolmeleheline** veebijuhend Microsoft Projecti põhifunktsioonid
 
 ---
 
-## 🚀 Alustamine
-
-```bash
-# 1. Klooni repositoorium
-git clone https://github.com/melon3000/ms-project-juhend.git
-
-# 2. Mine kausta
-cd ms-project-juhend
-
-# 3. Ava brauseris
-open index.html         # macOS
-start index.html        # Windows
-xdg-open index.html     # Linux
-```
-
-> **Nõuded:** Kaasaegne brauser. Serverit pole vaja.
-
----
-
 ## 📄 Lehed
 
 <table>
