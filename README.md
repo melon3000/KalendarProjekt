@@ -35,7 +35,7 @@ Iga leht näitab konkreetset protsessi samm-sammult koos visuaalide ja selgitust
 
 <table>
 <tr>
-<td width="45%" valign="top">
+<td width="33%" valign="top">
 
 ### 📅 `index.html` — Kalender
 
@@ -52,7 +52,22 @@ Iga leht näitab konkreetset protsessi samm-sammult koos visuaalide ja selgitust
 
 </td>
 
-<td width="45%" valign="top">
+<td width="33%" valign="top">
+
+### 🧮 `valem.html` — Arvutusväli
+
+**Realiseeritud:**
+
+| # | Tegevus |
+|---|---------|
+| 1 | Arvutusvälja loomine |
+| 2 | Valemite sisestamine |
+| 3 | Tulemuste kuvamine |
+| 4 | Andmete analüüs |
+
+</td>
+
+<td width="33%" valign="top">
 
 ### 📊 `diagramm.html` — Diagrammid
 
@@ -72,17 +87,6 @@ Iga leht näitab konkreetset protsessi samm-sammult koos visuaalide ja selgitust
 </table>
 
 </div>
-
----
-
-### 🧮 `valem.html` — Arvutusväli
-
-**Realiseeritud:**
-
-- Arvutusvälja loomine  
-- Valemite sisestamine  
-- Tulemuste kuvamine  
-- Andmete analüüs  
 
 ---
 
