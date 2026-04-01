@@ -1,164 +1,294 @@
-```md
-<div align="center">
+<!DOCTYPE html>
+<html lang="et">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ProjectLibre — Diagrammid</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0a0f1e;
+      --paper: #f5f0e8;
+      --accent: #059669;
+      --accent2: #0057ff;
+      --gold: #c9a84c;
+      --muted: #7a7567;
+      --card-bg: #ffffff;
+      --border: rgba(10,15,30,0.12);
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background-color: var(--paper); color: var(--ink); overflow-x: hidden; }
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 9999; opacity: .35;
+    }
 
-![header](https://capsule-render.vercel.app/api?type=waving&color=0:1f6feb,100:388bfd&height=200&section=header&text=ProjectLibre&fontSize=60&fontColor=ffffff&fontAlignY=38&desc=Interaktiivne+projektijuhtimise+veebijuhend&descAlignY=58&descSize=18&descColor=c9d1d9&animation=fadeIn)
+    /* HERO */
+    .hero { min-height: 100vh; display: grid; grid-template-rows: 1fr auto; position: relative; overflow: hidden; padding: 0 clamp(24px, 6vw, 100px); }
+    .hero-bg { position: absolute; inset: 0; background: var(--ink); z-index: 0; }
+    .hero-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 110% 20%, rgba(5,150,105,0.4) 0%, transparent 60%),
+                  radial-gradient(ellipse 50% 70% at -10% 80%, rgba(0,87,255,0.2) 0%, transparent 55%);
+    }
+    .hero-grid-lines {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 80px 80px; animation: gridShift 20s linear infinite;
+    }
+    @keyframes gridShift { from { transform: translateY(0); } to { transform: translateY(80px); } }
+    .hero-content { position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; padding: 120px 0 60px; max-width: 1100px; margin: 0 auto; width: 100%; }
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: 10px; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 32px; opacity: 0; animation: fadeUp 0.8s 0.2s ease forwards; }
+    .hero-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--gold); }
+    .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(3rem, 8vw, 7rem); font-weight: 800; line-height: 0.95; color: #fff; letter-spacing: -0.03em; margin-bottom: 36px; opacity: 0; animation: fadeUp 0.9s 0.35s ease forwards; }
+    .hero h1 em { font-style: normal; color: #6ee7b7; }
+    .hero-sub { max-width: 560px; font-size: 1.1rem; font-weight: 300; color: rgba(255,255,255,0.65); line-height: 1.7; opacity: 0; animation: fadeUp 0.9s 0.5s ease forwards; }
+    .hero-scroll { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; width: 100%; padding: 32px 0; display: flex; align-items: center; gap: 12px; color: rgba(255,255,255,0.35); font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0; animation: fadeUp 0.9s 0.9s ease forwards; }
+    .scroll-line { width: 40px; height: 1px; background: rgba(255,255,255,0.25); position: relative; overflow: hidden; }
+    .scroll-line::after { content: ''; position: absolute; left: -100%; top: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.6); animation: scrollPulse 2s 1.5s ease infinite; }
+    @keyframes scrollPulse { 0% { left: -100%; } 100% { left: 100%; } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
 
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=16&pause=1000&color=58A6FF&center=true&vCenter=true&width=500&lines=📅+Kalendri+loomine+ProjectLibre'is;📊+Gantti+diagramm+ja+ressursigraafik;🌐+Puhas+HTML+%2F+CSS+%2F+JavaScript)](https://git.io/typing-svg)
+    /* NAV */
+    .nav { position: sticky; top: 0; z-index: 800; background: rgba(245,240,232,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 clamp(24px, 6vw, 100px); display: flex; align-items: center; justify-content: space-between; height: 60px; }
+    .nav-brand { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem; letter-spacing: 0.04em; color: var(--ink); text-decoration: none; }
+    .nav-brand span { color: var(--accent); }
+    .nav-links { display: flex; gap: 4px; }
+    .nav-links a { text-decoration: none; color: var(--muted); font-size: 0.82rem; font-weight: 500; padding: 6px 14px; border-radius: 100px; transition: all 0.2s ease; }
+    .nav-links a:hover { color: var(--ink); background: rgba(10,15,30,0.06); }
 
----
+    /* PAGE TABS */
+    .page-tabs { background: var(--ink); padding: 0 clamp(24px, 6vw, 100px); }
+    .page-tabs-inner { max-width: 1200px; margin: 0 auto; display: flex; gap: 0; }
+    .page-tab { text-decoration: none; color: rgba(255,255,255,0.5); font-size: 0.82rem; font-weight: 500; padding: 14px 20px; border-bottom: 2px solid transparent; transition: all 0.2s ease; white-space: nowrap; }
+    .page-tab:hover { color: rgba(255,255,255,0.85); }
+    .page-tab.active { color: #fff; border-bottom-color: #6ee7b7; }
 
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![License](https://img.shields.io/badge/License-MIT-2ea44f?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-Active-brightgreen?style=for-the-badge)
+    /* MAIN */
+    .main-wrap { max-width: 1200px; margin: 0 auto; padding: 80px clamp(24px, 6vw, 100px); }
+    .sec-header { display: flex; align-items: baseline; gap: 16px; margin-bottom: 48px; }
+    .sec-num { font-family: 'Syne', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; color: var(--accent); text-transform: uppercase; }
+    .sec-title { font-family: 'Syne', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700; color: var(--ink); letter-spacing: -0.03em; line-height: 1.1; }
+    .sec-line { flex: 1; height: 1px; background: var(--border); }
 
+    /* INTRO */
+    .intro-block { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; margin-bottom: 100px; }
+    .intro-cell { background: var(--card-bg); padding: 48px; }
+    .intro-cell:first-child { border-right: 1px solid var(--border); }
+    .intro-cell h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; }
+    .intro-cell p { font-size: 1.05rem; line-height: 1.75; color: #3a3a3a; }
+    .intro-big { font-family: 'Syne', sans-serif; font-size: clamp(2.4rem, 5vw, 4.2rem); font-weight: 800; color: var(--ink); line-height: 1.05; letter-spacing: -0.04em; }
+    .intro-big em { font-style: normal; color: var(--accent); }
+
+    /* STEPS */
+    .steps-section { margin-bottom: 100px; }
+    .steps-list { display: flex; flex-direction: column; gap: 20px; }
+    .step-row { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 36px 40px; display: grid; grid-template-columns: 56px 1fr; gap: 32px; align-items: start; position: relative; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .step-row:hover { transform: translateY(-3px); box-shadow: 0 16px 48px rgba(10,15,30,0.09); }
+    .step-row::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent), var(--accent2)); opacity: 0; transition: opacity 0.3s; }
+    .step-row:hover::before { opacity: 1; }
+    .step-badge { width: 56px; height: 56px; border-radius: 16px; background: var(--ink); color: white; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .step-body h3 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--ink); margin-bottom: 10px; }
+    .step-body p { font-size: 0.96rem; line-height: 1.75; color: #525252; }
+    .step-body strong { color: var(--ink); font-weight: 600; }
+
+    /* GALLERY */
+    .gallery-section { margin-bottom: 100px; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
+    .gallery-item { border-radius: 16px; overflow: hidden; border: 1px solid var(--border); }
+    .gallery-item:nth-child(1) { grid-column: span 6; }
+    .gallery-item:nth-child(2) { grid-column: span 6; }
+    .gallery-item:nth-child(3) { grid-column: span 6; }
+    .gallery-item:nth-child(4) { grid-column: span 6; }
+    .gallery-img { width: 100%; height: 260px; object-fit: cover; display: block; cursor: zoom-in; background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); }
+    .gallery-caption { padding: 16px 20px; font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--border); background: var(--card-bg); }
+    .gallery-caption strong { color: var(--ink); font-weight: 600; }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border); padding: 32px clamp(24px, 6vw, 100px); display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; }
+    footer p { font-size: 0.82rem; color: var(--muted); }
+    .footer-badge { font-family: 'Syne', sans-serif; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); padding: 6px 14px; border: 1px solid rgba(5,150,105,0.3); border-radius: 100px; }
+
+    /* SUMMARY */
+    .summary-block { text-align: center; padding: 80px 40px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 24px; margin-bottom: 80px; }
+    .summary-block h2 { font-family: 'Syne', sans-serif; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800; color: var(--ink); letter-spacing: -0.04em; line-height: 1.1; max-width: 700px; margin: 0 auto 24px; }
+    .summary-block h2 em { font-style: normal; color: var(--accent); }
+    .summary-block p { max-width: 580px; margin: 0 auto; font-size: 1.05rem; line-height: 1.75; color: #525252; }
+
+    /* MODAL */
+    .modal { display: none; position: fixed; z-index: 99999; inset: 0; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; }
+    .modal-content { max-width: 90%; max-height: 90%; border-radius: 12px; animation: zoomIn 0.3s ease; }
+    .modal-close { position: absolute; top: 30px; right: 40px; font-size: 40px; color: white; cursor: pointer; }
+    @keyframes zoomIn { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+    @media (max-width: 900px) {
+      .intro-block { grid-template-columns: 1fr; }
+      .intro-cell:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-item { grid-column: span 1 !important; }
+      .nav-links { display: none; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+    }
+    @media (max-width: 520px) {
+      .gallery-grid { grid-template-columns: 1fr; }
+      .intro-cell { padding: 30px 24px; }
+      .step-row { padding: 28px 24px; grid-template-columns: 44px 1fr; gap: 20px; }
+      .page-tabs-inner { overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"><div class="hero-grid-lines"></div></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">ProjectLibre · Õpetlik juhend</p>
+    <h1>Projekti<br><em>diagrammid</em></h1>
+    <p class="hero-sub">Gantti diagramm ja ressursigraafik ProjectLibre'is — visuaalsed tööriistad projekti ajakava ja ressursside haldamiseks.</p>
+  </div>
+  <div class="hero-scroll"><div class="scroll-line"></div>Keri alla</div>
+</section>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">ProjectLibre <span>·</span> Juhend</a>
+    <div class="nav-links">
+      <a href="#eesmark">Eesmärk</a>
+      <a href="#sammud">Sammud</a>
+      <a href="#pildid">Pildid</a>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE TABS -->
+<div class="page-tabs">
+  <div class="page-tabs-inner">
+    <a href="index.html" class="page-tab">📅 Kalender</a>
+    <a href="diagrammid.html" class="page-tab active">📊 Diagrammid</a>
+  </div>
 </div>
 
----
+<!-- MAIN -->
+<main class="main-wrap">
 
-## 🎯 Projekti kirjeldus
+  <!-- INTRO -->
+  <section id="eesmark" style="margin-bottom:100px;">
+    <div class="sec-header">
+      <span class="sec-num">01</span>
+      <h2 class="sec-title">Mis on diagrammid ProjectLibre'is</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="intro-block">
+      <div class="intro-cell">
+        <p class="intro-big">Näe projekti<br><em>struktuuri</em></p>
+      </div>
+      <div class="intro-cell">
+        <h3>Miks diagrammid?</h3>
+        <p>Diagrammid ProjectLibre'is on visuaalsed tööriistad, mis aitavad projekti paremini mõista ja hallata, näidates ülesannete ajakava, kestust ja omavahelisi seoseid.</p>
+        <p style="margin-top:16px;">Gantti diagramm kuvab millal ülesanded algavad ja lõppevad ning võrgudiagramm näitab ülesannete järjekorda ja sõltuvusi, aidates seeläbi näha projekti struktuuri, jälgida edenemist ja tuvastada võimalikke probleeme ajakavas.</p>
+      </div>
+    </div>
+  </section>
 
-Selle töö käigus loodi **interaktiivne õppeveeb**, mille eesmärk on aidata kasutajatel õppida ProjectLibre programmi praktilist kasutamist.
+  <!-- STEPS -->
+  <section id="sammud" class="steps-section">
+    <div class="sec-header">
+      <span class="sec-num">02</span>
+      <h2 class="sec-title">Samm-sammuline juhend</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="steps-list">
+      <div class="step-row">
+        <div class="step-badge">1</div>
+        <div class="step-body">
+          <h3>Gantti diagramm programmis ProjectLibre</h3>
+          <p>GANTT-diagrammi vaatamiseks tuleb minna vahekaardile <strong>„Task"</strong> ja seejärel <strong>„Gantt"</strong>.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-badge">2</div>
+        <div class="step-body">
+          <h3>Gantti diagramm</h3>
+          <p>Nüüd avaneb teie projekt koos Gantti diagrammiga, kus saate seadistada <strong>ülesannete ja allülesannete aega</strong> ning vaadata ajakava paremal ja päevade arvu.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-badge">3</div>
+        <div class="step-body">
+          <h3>Resource diagramm programmis ProjectLibre</h3>
+          <p>Ressursside graafikuid vaadata saate, kui lähete vahekaardile <strong>„Views"</strong> ja sealt <strong>„Resource Usage"</strong>.</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-badge">4</div>
+        <div class="step-body">
+          <h3>Resource Usage diagramm</h3>
+          <p>Nüüd kuvatakse teile kõik teie loodud <strong>materiaalsed ja tavalised ressursid</strong>, nende tööaeg ning millistes ülesannetes nad osalevad.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-Valminud töö ei kirjelda lihtsalt, mis programmis olemas on, vaid näitab **mida selle projekti käigus reaalselt tehti** — loodi veebijuhend, kus on samm-sammult lahti seletatud kalendri loomine, diagrammide kasutamine ning projektiplaneerimise põhilised töövõtted.
+  <!-- GALLERY -->
+  <section id="pildid" class="gallery-section">
+    <div class="sec-header">
+      <span class="sec-num">03</span>
+      <h2 class="sec-title">Ekraanipildid</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="gallery-grid">
+      <figure class="gallery-item">
+        <img src="Libre/images/diag/step1.png" alt="Gantti diagrammi avamine" class="gallery-img" onclick="openModal(this)">
+        <figcaption class="gallery-caption"><strong>Pilt 1.</strong> Gantti diagrammi avamine — Task → Gantt.</figcaption>
+      </figure>
+      <figure class="gallery-item">
+        <img src="Libre/images/diag/step2.png" alt="Gantti diagramm" class="gallery-img" onclick="openModal(this)">
+        <figcaption class="gallery-caption"><strong>Pilt 2.</strong> Gantti diagramm ülesannete ja ajakavaga.</figcaption>
+      </figure>
+      <figure class="gallery-item">
+        <img src="Libre/images/diag/step3.png" alt="Resource Usage avamine" class="gallery-img" onclick="openModal(this)">
+        <figcaption class="gallery-caption"><strong>Pilt 3.</strong> Resource Usage avamine — Views → Resource Usage.</figcaption>
+      </figure>
+      <figure class="gallery-item">
+        <img src="Libre/images/diag/step4.png" alt="Resource Usage diagramm" class="gallery-img" onclick="openModal(this)">
+        <figcaption class="gallery-caption"><strong>Pilt 4.</strong> Resource Usage diagramm ressursside tööajaga.</figcaption>
+      </figure>
+    </div>
+  </section>
 
----
+  <!-- SUMMARY -->
+  <section id="kokkuvote" class="summary-block">
+    <h2>Visualiseeri projekti <em>täielikult</em>.</h2>
+    <p>Gantti diagramm ja ressursigraafik annavad täieliku ülevaate projekti kulgemisest. Kasuta neid koos, et planeerida ülesandeid ja ressursse optimaalselt.</p>
+  </section>
 
-## 🧩 Töö käigus tehtu
+</main>
 
-Töö raames:
+<footer>
+  <p>Koostatud ProjectLibre õppeülesande jaoks.</p>
+  <span class="footer-badge">Diagrammid</span>
+</footer>
 
-- loodi **mitmeleheline veebiprojekt**
-- jagati teema kaheks suureks praktiliseks osaks
-- koostati samm-sammulised juhendid ProjectLibre kasutamiseks
-- lisati ekraanipildid, et teha tegevused arusaadavamaks
-- ehitati puhas ja lihtne navigeerimine lehtede vahel
-- kujundati interaktiivne ja kasutajasõbralik õppekeskkond
-
----
-
-## 🌐 Projekti ülesehitus
-
-Projekt koosneb kahest põhilehest, mis moodustavad koos ühe tervikliku juhendi.
-
-| Leht | Eesmärk | Sammud |
-|------|--------|:------:|
-| `kalender.html` | Uue kalendri loomine ja rakendamine ProjectLibre'is | 6 |
-| `diagrammid.html` | Gantti diagrammi ja ressursigraafiku kasutamine | 4 |
-
----
-
-## 📄 Realiseeritud tööosad
-
-<table>
-<tr>
-<td width="50%">
-
-### 📅 `kalender.html`
-
-Selle lehe käigus realiseeriti:
-
-| # | Tegevus |
-|---|------|
-| 1 | Resource → Calendar avamine |
-| 2 | Kalendri menüü ja seadete vaatamine |
-| 3 | Uue TestKalendri loomine |
-| 4 | Tööpäevade ja tööaja seadistamine |
-| 5 | Task Calendar rakendamine |
-| 6 | Tulemuse kontrollimine projektil |
-
-</td>
-<td width="50%">
-
-### 📊 `diagrammid.html`
-
-Selle lehe käigus realiseeriti:
-
-| # | Tegevus |
-|---|------|
-| 1 | Task → Gantt avamine |
-| 2 | Gantti diagrammi kasutamine ajakava vaatamiseks |
-| 3 | Views → Resource Usage avamine |
-| 4 | Ressursside tööaja ja kasutuse analüüs |
-
-</td>
-</tr>
-</table>
-
----
-
-## ✨ Realiseeritud funktsionaalsus
-
-| Funktsioon | Kirjeldus |
-|---|---|
-| 📌 Kleepuv navigatsioon | Jääb lehe ülaossa kerimise ajal |
-| 🔍 Piltide modal | Võimaldab pilte suurendada |
-| ⌨️ `Esc` klahv | Sulgeb modali kiiresti |
-| 🎬 Hero animatsioon | Sissefade ja liikuv ruudustik |
-| 📱 Reageeriv kujundus | Töötab mobiilis ja lauaarvutis |
-| 🗂 Vahelehtede navigeerimine | Lihtne liikumine lehtede vahel |
-
----
-
-## 🛠 Tehniline teostus
-
-Projekt valmis ilma raamistiketa ning kasutab ainult põhilisi veebitehnoloogiaid.
-
-| Tehnoloogia | Kasutus |
-|---|---|
-| `HTML5` | Lehe struktuur ja semantika |
-| `CSS3` | Kujundus, animatsioonid ja paigutus |
-| `Vanilla JS` | Modal, sündmuste haldus ja interaktiivsus |
-| `Google Fonts` | Syne + DM Sans tüpograafia |
-
----
-
-## 💡 Projekti praktiline väärtus
-
-Valminud veebijuhend aitab:
-
-- õppida ProjectLibre'i praktiliselt
-- mõista, kuidas seadistada tööaega ja kalendreid
-- kasutada Gantti diagrammi projekti ajakava jälgimiseks
-- vaadata ressursside kasutust ja töökoormust
-- muuta projektijuhtimise õppimine visuaalsemaks ja lihtsamaks
-
----
-
-## 📊 GitHub statistika
-
-<div align="center">
-
-![GitHub repo size](https://img.shields.io/github/repo-size/melon3000/projectlibre-juhend?style=flat-square&color=1f6feb&label=Repo+suurus)
-![GitHub last commit](https://img.shields.io/github/last-commit/melon3000/projectlibre-juhend?style=flat-square&color=238636&label=Viimane+commit)
-![GitHub stars](https://img.shields.io/github/stars/melon3000/projectlibre-juhend?style=flat-square&color=e3b341&label=Tähed)
-
+<div id="imgModal" class="modal">
+  <span class="modal-close" onclick="closeModal()">&times;</span>
+  <img class="modal-content" id="modalImg">
 </div>
 
----
-
-## 🧾 Kokkuvõte
-
-Selle töö tulemusena valmis **ProjectLibre õppeveeb**, mis ühendab endas:
-
-- praktilise juhendi
-- visuaalsed ekraanipildid
-- mitmelehelise struktuuri
-- selge navigeerimise
-- kasutajasõbraliku kujunduse
-
-Projekt näitab, kuidas veebilahenduse abil saab teha projektijuhtimistarkvara õppimise lihtsamaks, loogilisemaks ja arusaadavamaks.
-
----
-
-<div align="center">
-
-![footer](https://capsule-render.vercel.app/api?type=waving&color=0:388bfd,100:1f6feb&height=100&section=footer)
-
-**melon3000** · Koostatud ProjectLibre õppeülesande jaoks
-
-[![GitHub](https://img.shields.io/badge/GitHub-melon3000-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/melon3000)
-
-</div>
-```
+<script>
+function openModal(img) {
+  document.getElementById("imgModal").style.display = "flex";
+  document.getElementById("modalImg").src = img.src;
+}
+function closeModal() {
+  document.getElementById("imgModal").style.display = "none";
+}
+document.getElementById("imgModal").addEventListener("click", function(e) { if (e.target === this) closeModal(); });
+document.addEventListener("keydown", function(e) { if (e.key === "Escape") closeModal(); });
+</script>
+</body>
+</html>
